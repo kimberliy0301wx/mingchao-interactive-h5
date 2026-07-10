@@ -6,26 +6,46 @@ import QRCode from "qrcode";
 type Stage = "intro" | "story" | "symbols" | "social" | "remix" | "kick" | "result";
 type SensorPayload = { type?: string; side?: "left" | "right"; active?: boolean };
 
-const STAGES: Array<{ key: Stage; label: string; token: string }> = [
-  { key: "intro", label: "入场", token: "◈" },
-  { key: "story", label: "情感火种", token: "◆" },
-  { key: "symbols", label: "城市徽记", token: "▧" },
-  { key: "social", label: "同伴回声", token: "))" },
-  { key: "remix", label: "梗火花", token: "✦" },
-  { key: "kick", label: "一脚破圈", token: "●" },
+const STAGES: Array<{ key: Stage; label: string; icon: string }> = [
+  { key: "intro", label: "入场", icon: "/assets/button-icons-v2/intro.png" },
+  { key: "story", label: "情感火种", icon: "/assets/button-icons-v2/fire.png" },
+  { key: "symbols", label: "城市徽记", icon: "/assets/button-icons-v2/flag.png" },
+  { key: "social", label: "同伴回声", icon: "/assets/button-icons-v2/echo.png" },
+  { key: "remix", label: "梗火花", icon: "/assets/button-icons-v2/spark.png" },
+  { key: "kick", label: "一脚破圈", icon: "/assets/button-icons-v2/kick.png" },
 ];
 
 const MEMORY_FRAGMENTS = ["海风吹回的旧皮球", "第一次穿上的家乡球衣", "看台上传来的熟悉方言"];
+const MEMORY_ICONS: Record<string, string> = {
+  "海风吹回的旧皮球": "/assets/button-icons-v2/memory-ball.png",
+  "第一次穿上的家乡球衣": "/assets/button-icons-v2/memory-jersey.png",
+  "看台上传来的熟悉方言": "/assets/button-icons-v2/memory-stands.png",
+};
 const SYMBOLS = [
-  { id: "wave", glyph: "≈", label: "海风纹样" },
-  { id: "tower", glyph: "城", label: "地标剪影" },
-  { id: "ball", glyph: "⚽", label: "足球符号" },
-  { id: "cheer", glyph: "燃", label: "助威短句" },
-  { id: "bridge", glyph: "⌒", label: "山海连线" },
+  { id: "wave", icon: "/assets/button-icons-v2/wave.png", label: "海风纹样" },
+  { id: "tower", icon: "/assets/button-icons-v2/tower.png", label: "地标剪影" },
+  { id: "ball", icon: "/assets/button-icons-v2/ball.png", label: "足球符号" },
+  { id: "cheer", icon: "/assets/button-icons-v2/cheer.png", label: "助威短句" },
+  { id: "bridge", icon: "/assets/button-icons-v2/bridge.png", label: "山海连线" },
 ];
 const PHRASES = ["海风起势，这脚向前！", "厝边，一起看闽超！", "这球有福气！", "家乡队，继续燃！"];
 const TONES = ["热血切帧", "可爱弹跳", "反差停格"];
-const STICKERS = ["⚽", "✦", "≈", "旗"];
+const STICKERS = [
+  { id: "ball", icon: "/assets/button-icons-v2/ball.png", label: "足球" },
+  { id: "spark", icon: "/assets/button-icons-v2/spark.png", label: "火花" },
+  { id: "wave", icon: "/assets/button-icons-v2/wave.png", label: "海风" },
+  { id: "flag", icon: "/assets/button-icons-v2/sticker-flag.png", label: "旗帜" },
+];
+const RITUAL_ICONS = [
+  { id: "fire", icon: "/assets/button-icons-v2/fire.png", label: "情感火种" },
+  { id: "flag", icon: "/assets/button-icons-v2/flag.png", label: "城市徽记" },
+  { id: "echo", icon: "/assets/button-icons-v2/echo.png", label: "同伴回声" },
+  { id: "spark", icon: "/assets/button-icons-v2/spark.png", label: "梗火花" },
+];
+
+function PixelIcon({ src, alt = "", className = "" }: { src: string; alt?: string; className?: string }) {
+  return <img className={`pixel-icon ${className}`} src={src} alt={alt} draggable={false} />;
+}
 
 function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -45,9 +65,10 @@ function drawCover(ctx: CanvasRenderingContext2D, image: CanvasImageSource, sour
   ctx.drawImage(image, sourceX, sourceY, cropWidth, cropHeight, x, y, width, height);
 }
 
-function PixelButton({ children, onClick, disabled = false, tone = "primary", testId }: { children: React.ReactNode; onClick: () => void; disabled?: boolean; tone?: "primary" | "secondary" | "ghost"; testId?: string }) {
+function PixelButton({ children, onClick, icon, disabled = false, tone = "primary", testId }: { children: React.ReactNode; onClick: () => void; icon: string; disabled?: boolean; tone?: "primary" | "secondary" | "ghost"; testId?: string }) {
   return (
     <button className={`pixel-button ${tone}`} onClick={onClick} disabled={disabled} data-testid={testId}>
+      <PixelIcon src={icon} alt="" className="button-icon" />
       {children}
     </button>
   );
@@ -70,7 +91,7 @@ export default function Home() {
   const [photoStatus, setPhotoStatus] = useState("合影只在你同意后开启");
   const [phrase, setPhrase] = useState(PHRASES[0]);
   const [tone, setTone] = useState(TONES[0]);
-  const [sticker, setSticker] = useState(STICKERS[0]);
+  const [sticker, setSticker] = useState(STICKERS[0].id);
   const [remixReady, setRemixReady] = useState(false);
   const [remixing, setRemixing] = useState(false);
   const [kickHint, setKickHint] = useState("把足球向球门方向快速上划，或等待实体传感器信号");
@@ -326,7 +347,8 @@ export default function Home() {
     ctx.fillText(phrase, 92, 1180);
     ctx.fillStyle = "#8bd0ca";
     ctx.font = '700 34px "PingFang SC", "Microsoft YaHei", sans-serif';
-    ctx.fillText(`${sticker}  ${tone}  ·  闽超声浪接力`, 92, 1250);
+    const stickerLabel = STICKERS.find((item) => item.id === sticker)?.label ?? sticker;
+    ctx.fillText(`${stickerLabel}  ${tone}  ·  闽超声浪接力`, 92, 1250);
     ctx.fillStyle = "#fff7d8";
     ctx.font = '700 30px "PingFang SC", "Microsoft YaHei", sans-serif';
     ctx.fillText("故事 · 城市 · 同伴 · 新梗 · 一脚传出去", 92, 1360);
@@ -387,16 +409,16 @@ export default function Home() {
       <div className="stadium-backdrop" aria-hidden="true" />
       <header className="topbar">
         <div className="brand-lockup">
-          <span className="brand-chip">互动仪式链 · 像素体验</span>
+          <span className="brand-chip">PIXEL RITUAL · 互动仪式链</span>
           <strong>闽超声浪接力</strong>
         </div>
-        <button className="sensor-toggle" onClick={() => setSensorPanel((value) => !value)} aria-expanded={sensorPanel}>传感器</button>
+        <button className="sensor-toggle" onClick={() => setSensorPanel((value) => !value)} aria-expanded={sensorPanel}><PixelIcon src="/assets/button-icons-v2/sensor.png" alt="" className="button-icon" />传感器</button>
       </header>
 
       <nav className="ritual-track" aria-label="互动剧情进度">
         {STAGES.map((item, index) => (
           <div className={`track-step ${index < currentIndex ? "done" : ""} ${item.key === stage ? "active" : ""}`} key={item.key}>
-            <span>{item.token}</span><small>{item.label}</small>
+            <span><PixelIcon src={item.icon} alt={item.label} /></span><small>{item.label}</small>
           </div>
         ))}
       </nav>
@@ -404,28 +426,33 @@ export default function Home() {
       {sensorPanel && (
         <aside className="sensor-panel" aria-label="传感器控制台">
           <div><strong>实体装置接口</strong><small>{sensorStatus}</small></div>
-          <PixelButton onClick={() => void connectSerialSensor()} tone="secondary">连接串口传感器</PixelButton>
+          <PixelButton onClick={() => void connectSerialSensor()} icon="/assets/button-icons-v2/serial.png" tone="secondary">连接串口传感器</PixelButton>
           <div className="sensor-sim-row">
-            <button onClick={() => window.dispatchEvent(new CustomEvent("mingchao:sensor", { detail: { type: "mat-left", active: true } }))}>模拟左脚垫</button>
-            <button onClick={() => window.dispatchEvent(new CustomEvent("mingchao:sensor", { detail: { type: "mat-right", active: true } }))}>模拟右脚垫</button>
-            <button onClick={() => window.dispatchEvent(new CustomEvent("mingchao:sensor", { detail: { type: "goal" } }))}>模拟进球</button>
+            <button onClick={() => window.dispatchEvent(new CustomEvent("mingchao:sensor", { detail: { type: "mat-left", active: true } }))}><PixelIcon src="/assets/button-icons-v2/mat-left.png" alt="" className="button-icon" />模拟左脚垫</button>
+            <button onClick={() => window.dispatchEvent(new CustomEvent("mingchao:sensor", { detail: { type: "mat-right", active: true } }))}><PixelIcon src="/assets/button-icons-v2/mat-right.png" alt="" className="button-icon" />模拟右脚垫</button>
+            <button onClick={() => window.dispatchEvent(new CustomEvent("mingchao:sensor", { detail: { type: "goal" } }))}><PixelIcon src="/assets/button-icons-v2/goal-sensor.png" alt="" className="button-icon" />模拟进球</button>
           </div>
           <p>串口每行可发送 JSON：goal、mat-left、mat-right、clap。没有硬件时不影响完整体验。</p>
         </aside>
       )}
 
       <section className="game-stage" aria-live="polite">
+        <div className="stage-corners" aria-hidden="true"><i /><i /><i /><i /></div>
         {stage === "intro" && (
           <div className="intro-layout">
             <div className="hero-copy">
-              <span className="eyebrow">序幕 · 熄灭的声浪</span>
-              <h1>把闽超的热爱<br /><em>一脚踢出屏幕</em></h1>
+              <span className="eyebrow">STAGE 0 · 序幕</span>
+              <h1>闽超声浪接力<br /><em>一脚踢出屏幕</em></h1>
               <p>球场里已经沸腾，屏幕外却还罩着“温差雾”。找回四件仪式物，把现场声浪交给下一个人。</p>
-              <PixelButton onClick={() => setStage("story")} testId="start-game">接球，成为破圈传球手</PixelButton>
-              <div className="no-data-note">无排行榜 · 无统计图 · 只有真实互动与可分享作品</div>
+              <PixelButton onClick={() => setStage("story")} icon="/assets/button-icons-v2/start-pass.png" testId="start-game">接球，开始破圈</PixelButton>
+              <div className="no-data-note">NO RANK · NO CHART · 只有真实互动</div>
             </div>
             <div className="guide-scene">
-              <div className="orbit-token fire">◆</div><div className="orbit-token flag">▧</div><div className="orbit-token echo">))</div><div className="orbit-token spark">✦</div>
+              {RITUAL_ICONS.map((item) => (
+                <div className={`orbit-token ${item.id}`} key={item.id}>
+                  <PixelIcon src={item.icon} alt={item.label} />
+                </div>
+              ))}
               <img src="/assets/guide.png" alt="原创像素引导员小闽火，手托发光足球" />
               <div className="speech-bubble">“闽超缺的不是观众，<br />是把热爱传给下一位的那一脚。”</div>
             </div>
@@ -434,82 +461,181 @@ export default function Home() {
 
         {stage === "story" && (
           <div className="act-layout">
-            <div className="act-heading"><span>第一幕 · H1</span><h2>把比分变成家乡故事</h2><p>纯资讯让人知道，情感叙事让人愿意继续讲。</p></div>
+            <div className="act-heading"><span>ACT 1 · H1</span><h2>把比分变成家乡故事</h2><p>纯资讯让人知道，情感叙事让人愿意继续讲。</p></div>
             <div className="story-doors">
-              <button className={`story-door info ${storyMode === "info" ? "selected" : ""}`} onClick={() => setStoryMode("info")}><small>赛事资讯</small><strong>今晚有比赛</strong><span>知道发生了什么</span></button>
-              <button className={`story-door emotion ${storyMode === "emotion" ? "selected" : ""}`} onClick={() => setStoryMode("emotion")}><small>人物叙事</small><strong>旧球鞋里的海风</strong><span>知道为什么值得记住</span></button>
+              <button className={`story-door info ${storyMode === "info" ? "selected" : ""}`} onClick={() => setStoryMode("info")}><PixelIcon src="/assets/button-icons-v2/info-card.png" alt="" className="choice-icon" /><small>赛事资讯</small><strong>今晚有比赛</strong><span>知道发生了什么</span></button>
+              <button className={`story-door emotion ${storyMode === "emotion" ? "selected" : ""}`} onClick={() => setStoryMode("emotion")}><PixelIcon src="/assets/button-icons-v2/story-boot.png" alt="" className="choice-icon" /><small>人物叙事</small><strong>旧球鞋里的海风</strong><span>知道为什么值得记住</span></button>
             </div>
             {storyMode === "info" && <div className="soft-message">赛况卡亮了一下，又安静了。小闽火：“信息已经看见了，再听一句他的心里话。”</div>}
             {storyMode === "emotion" && (
               <div className="memory-board">
-                <div className="fragment-row">{MEMORY_FRAGMENTS.map((fragment) => <button className={memories.includes(fragment) ? "restored" : ""} key={fragment} onClick={() => toggleMemory(fragment)}>{memories.includes(fragment) ? "✦" : "□"}<span>{fragment}</span></button>)}</div>
+                <div className="fragment-row">
+                  {MEMORY_FRAGMENTS.map((fragment) => (
+                    <button className={memories.includes(fragment) ? "restored" : ""} key={fragment} onClick={() => toggleMemory(fragment)}>
+                      <PixelIcon src={memories.includes(fragment) ? "/assets/button-icons-v2/memory-on.png" : MEMORY_ICONS[fragment]} alt="" />
+                      <span>{fragment}</span>
+                    </button>
+                  ))}
+                </div>
                 <blockquote>“小时候，海风总把球吹回脚边。今天我想把这座城的名字，踢到更远的地方。”</blockquote>
-                <button className={`heart-hold ${heartHolding ? "holding" : ""} ${heartReady ? "ready" : ""}`} onPointerDown={startHeartHold} onPointerUp={cancelHeartHold} onPointerLeave={cancelHeartHold} disabled={memories.length !== MEMORY_FRAGMENTS.length || heartReady}>{heartReady ? "情感火种已点亮" : "按住心跳，守住这段记忆"}</button>
+                <button
+                  className={`heart-hold ${heartHolding ? "holding" : ""} ${heartReady ? "ready" : ""}`}
+                  onPointerDown={startHeartHold}
+                  onPointerUp={cancelHeartHold}
+                  onPointerLeave={cancelHeartHold}
+                  disabled={memories.length !== MEMORY_FRAGMENTS.length || heartReady}
+                >
+                  <span className="heart-visual" aria-hidden="true">
+                    <PixelIcon src="/assets/button-icons-v2/heart-memory.png" alt="" className="heart-icon" />
+                    <i className="heart-pulse" />
+                    <i className="heart-pulse delay" />
+                  </span>
+                  <span className="heart-copy">{heartReady ? "情感火种已点亮" : "按住心跳，守住这段记忆"}</span>
+                </button>
               </div>
             )}
-            <div className="act-actions"><PixelButton onClick={() => setStage("symbols")} disabled={!heartReady}>带着情感火种继续</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={() => setStage("symbols")} icon="/assets/button-icons-v2/fire-next.png" disabled={!heartReady}>带着情感火种继续</PixelButton></div>
           </div>
         )}
 
         {stage === "symbols" && (
           <div className="act-layout symbol-act">
-            <div className="act-heading"><span>第二幕 · H2</span><h2>给福建味留一口气</h2><p>选择最重要的城市符号，让人一眼认出，也让画面有呼吸。</p></div>
+            <div className="act-heading"><span>ACT 2 · H2</span><h2>给福建味留一口气</h2><p>选择最重要的城市符号，让人一眼认出，也让画面有呼吸。</p></div>
             <div className="symbol-workshop">
-              <div className="symbol-palette"><h3>点选素材，再点一次撤回</h3>{SYMBOLS.map((item) => <button key={item.id} className={selectedSymbols.includes(item.id) ? "picked" : ""} onClick={() => toggleSymbol(item.id)}><b>{item.glyph}</b><span>{item.label}</span></button>)}</div>
-              <div className={`pixel-flag ${symbolState}`}><div className="flag-pole" /><div className="flag-cloth">{selectedSymbols.map((id) => { const item = SYMBOLS.find((symbol) => symbol.id === id); return <span key={id}>{item?.glyph}</span>; })}<strong>闽超 · 声浪接力</strong></div><div className="density-state">{symbolState === "too-light" ? "太淡" : symbolState === "too-crowded" ? "太挤" : "刚刚好"}</div></div>
+              <div className="symbol-palette">
+                <h3>点选素材，再点一次撤回</h3>
+                {SYMBOLS.map((item) => (
+                  <button key={item.id} className={selectedSymbols.includes(item.id) ? "picked" : ""} onClick={() => toggleSymbol(item.id)}>
+                    <b><PixelIcon src={item.icon} alt={item.label} /></b>
+                    <span>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+              <div className={`pixel-flag ${symbolState}`}>
+                <div className="flag-pole" />
+                <div className="flag-cloth">
+                  {selectedSymbols.map((id) => {
+                    const item = SYMBOLS.find((symbol) => symbol.id === id);
+                    return item ? <span key={id}><PixelIcon src={item.icon} alt={item.label} /></span> : null;
+                  })}
+                  <strong>闽超 · 声浪接力</strong>
+                </div>
+                <div className="density-state">{symbolState === "too-light" ? "太淡" : symbolState === "too-crowded" ? "太挤" : "刚刚好"}</div>
+              </div>
             </div>
             <div className={`symbol-message ${symbolState}`}>{symbolMessage}</div>
-            <div className="act-actions"><PixelButton onClick={() => setStage("social")} disabled={symbolState !== "just-right"}>举起城市徽记</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={() => setStage("social")} icon="/assets/button-icons-v2/flag-raise.png" disabled={symbolState !== "just-right"}>举起城市徽记</PixelButton></div>
           </div>
         )}
 
         {stage === "social" && (
           <div className="act-layout social-act">
-            <div className="act-heading"><span>第三幕 · H3</span><h2>一个人知道，不如一起喊</h2><p>共同站位、轮流回应，再和拉拉队完成一张真正能带走的合影。</p></div>
+            <div className="act-heading"><span>ACT 3 · H3</span><h2>一个人知道，不如一起喊</h2><p>共同站位、轮流回应，再和拉拉队完成一张真正能带走的合影。</p></div>
             {!chantComplete ? (
               <>
-                <div className="footpads"><button className={leftPad ? "active" : ""} onClick={() => setLeftPad(true)}><b>左脚印</b><span>{leftPad ? "传球手已就位" : "我站上去"}</span></button><div className={`pass-line ${leftPad && rightPad ? "linked" : ""}`}>⚽</div><button className={rightPad ? "active" : ""} onClick={() => setRightPad(true)}><b>右脚印</b><span>{rightPad ? "同伴已就位" : "邀请同伴"}</span></button></div>
-                <div className="chant-console"><div className={`sound-ripples hits-${Math.min(chantHits, 3)}`}><i /><i /><i /></div><strong>{leftPad && rightPad ? micStatus : "先让两枚脚印都亮起来"}</strong><div className="chant-buttons"><PixelButton onClick={() => void startMicrophone()} disabled={!leftPad || !rightPad} tone="secondary">打开麦克风助威</PixelButton><PixelButton onClick={tapCheer} disabled={!leftPad || !rightPad} tone="ghost">拍手 / 点按助威</PixelButton></div></div>
+                <div className="footpads">
+                  <button className={leftPad ? "active" : ""} onClick={() => setLeftPad(true)}>
+                    <PixelIcon src="/assets/button-icons-v2/mat-left.png" alt="" className="foot-icon" />
+                    <b>左脚印</b>
+                    <span>{leftPad ? "传球手已就位" : "我站上去"}</span>
+                  </button>
+                  <div className={`pass-line ${leftPad && rightPad ? "linked" : ""}`}>
+                    <PixelIcon src="/assets/button-icons-v2/ball.png" alt="足球" />
+                  </div>
+                  <button className={rightPad ? "active" : ""} onClick={() => setRightPad(true)}>
+                    <PixelIcon src="/assets/button-icons-v2/mat-right.png" alt="" className="foot-icon" />
+                    <b>右脚印</b>
+                    <span>{rightPad ? "同伴已就位" : "邀请同伴"}</span>
+                  </button>
+                </div>
+                <div className="chant-console"><div className={`sound-ripples hits-${Math.min(chantHits, 3)}`}><i /><i /><i /></div><strong>{leftPad && rightPad ? micStatus : "先让两枚脚印都亮起来"}</strong><div className="chant-buttons"><PixelButton onClick={() => void startMicrophone()} icon="/assets/button-icons-v2/microphone.png" disabled={!leftPad || !rightPad} tone="secondary">打开麦克风助威</PixelButton><PixelButton onClick={tapCheer} icon="/assets/button-icons-v2/clap.png" disabled={!leftPad || !rightPad} tone="ghost">拍手 / 点按助威</PixelButton></div></div>
               </>
             ) : (
               <div className="photo-studio">
                 <div className="camera-frame">{cameraOn ? <video ref={videoRef} playsInline muted /> : capturedPhoto ? <img src={capturedPhoto} alt="用户选择的像素拉拉队合影" /> : <div className="avatar-stage"><img src="/assets/cheer-squad.png" alt="原创像素拉拉队做出挥旗、举手和比心动作" /></div>}<div className="camera-overlay"><span>准备——一起把海风喊起来！</span></div></div>
-                <div className="photo-controls"><p>{photoStatus}</p>{cameraOn ? <PixelButton onClick={() => void capturePhoto()}>定格这一刻</PixelButton> : <><PixelButton onClick={() => void openCamera()} tone="secondary">同意并打开镜头</PixelButton><PixelButton onClick={useAvatarPhoto} tone="ghost">不用镜头，使用像素合影</PixelButton></>}</div>
+                <div className="photo-controls"><p>{photoStatus}</p>{cameraOn ? <PixelButton onClick={() => void capturePhoto()} icon="/assets/button-icons-v2/capture.png">定格这一刻</PixelButton> : <><PixelButton onClick={() => void openCamera()} icon="/assets/button-icons-v2/camera.png" tone="secondary">同意并打开镜头</PixelButton><PixelButton onClick={useAvatarPhoto} icon="/assets/button-icons-v2/avatar-group.png" tone="ghost">不用镜头，使用像素合影</PixelButton></>}</div>
               </div>
             )}
-            <div className="act-actions"><PixelButton onClick={() => { stopCamera(); setStage("remix"); }} disabled={!capturedPhoto}>带着同伴回声去二创</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={() => { stopCamera(); setStage("remix"); }} icon="/assets/button-icons-v2/echo-next.png" disabled={!capturedPhoto}>带着同伴回声去二创</PixelButton></div>
           </div>
         )}
 
         {stage === "remix" && (
           <div className="act-layout remix-act">
-            <div className="act-heading"><span>第四幕 · H4</span><h2>把名场面变成“我们的梗”</h2><p>原片只是材料，你的方言、动作和贴纸让它长出第二次生命。</p></div>
+            <div className="act-heading"><span>ACT 4 · H4</span><h2>把名场面变成“我们的梗”</h2><p>原片只是材料，你的方言、动作和贴纸让它长出第二次生命。</p></div>
             <div className="remix-workshop">
-              <div className="remix-controls"><label>方言 / 助威短句<select value={phrase} onChange={(event) => { setPhrase(event.target.value); setRemixReady(false); }}>{PHRASES.map((item) => <option key={item}>{item}</option>)}</select></label><label>像素节奏<select value={tone} onChange={(event) => { setTone(event.target.value); setRemixReady(false); }}>{TONES.map((item) => <option key={item}>{item}</option>)}</select></label><fieldset><legend>动作贴纸</legend>{STICKERS.map((item) => <button className={sticker === item ? "selected" : ""} key={item} onClick={() => { setSticker(item); setRemixReady(false); }}>{item}</button>)}</fieldset><PixelButton onClick={makeRemix} disabled={remixing}>{remixing ? "素材正在重新排布…" : "重新开球 · 完成再编码"}</PixelButton></div>
-              <div className={`remix-preview ${remixing ? "remixing" : ""} ${remixReady ? "ready" : ""}`}><img src={capturedPhoto || "/assets/cheer-squad.png"} alt="闽超像素二创预览" /><div className="meme-caption">{phrase}</div><div className="meme-sticker">{sticker}</div><small>{tone}</small></div>
+              <div className="remix-controls">
+                <label>方言 / 助威短句
+                  <select value={phrase} onChange={(event) => { setPhrase(event.target.value); setRemixReady(false); }}>
+                    {PHRASES.map((item) => <option key={item}>{item}</option>)}
+                  </select>
+                </label>
+                <label>像素节奏
+                  <select value={tone} onChange={(event) => { setTone(event.target.value); setRemixReady(false); }}>
+                    {TONES.map((item) => <option key={item}>{item}</option>)}
+                  </select>
+                </label>
+                <fieldset>
+                  <legend>动作贴纸</legend>
+                  {STICKERS.map((item) => (
+                    <button className={sticker === item.id ? "selected" : ""} key={item.id} onClick={() => { setSticker(item.id); setRemixReady(false); }} title={item.label}>
+                      <PixelIcon src={item.icon} alt={item.label} />
+                    </button>
+                  ))}
+                </fieldset>
+                <PixelButton onClick={makeRemix} icon="/assets/button-icons-v2/remix.png" disabled={remixing}>{remixing ? "素材正在重新排布…" : "重新开球 · 完成再编码"}</PixelButton>
+              </div>
+              <div className={`remix-preview ${remixing ? "remixing" : ""} ${remixReady ? "ready" : ""}`}>
+                <img src={capturedPhoto || "/assets/cheer-squad.png"} alt="闽超像素二创预览" />
+                <div className="meme-caption">{phrase}</div>
+                <div className="meme-sticker">
+                  <PixelIcon src={STICKERS.find((item) => item.id === sticker)?.icon ?? STICKERS[0].icon} alt="" />
+                </div>
+                <small>{tone}</small>
+              </div>
             </div>
             {remixReady && <div className="soft-message success">梗火花已点亮：这已经不是原素材，而是你的闽超表达。</div>}
-            <div className="act-actions"><PixelButton onClick={() => setStage("kick")} disabled={!remixReady}>把四件仪式物注入足球</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={() => setStage("kick")} icon="/assets/button-icons-v2/ritual-ball.png" disabled={!remixReady}>把四件仪式物注入足球</PixelButton></div>
           </div>
         )}
 
         {stage === "kick" && (
           <div className="act-layout kick-act">
-            <div className="act-heading"><span>终幕 · 互动仪式链闭环</span><h2>一脚破圈</h2><p>故事、符号、同伴与新梗已经就位。现在，把热爱踢出屏幕。</p></div>
-            <div className="goal-stage"><div className="goal-net"><span>声浪出口</span></div><div className="ritual-orbit"><i>◆</i><i>▧</i><i>))</i><i>✦</i></div><button className="kick-ball" aria-label="向上划动足球完成射门" onPointerDown={(event) => { kickStart.current = event.clientY; event.currentTarget.setPointerCapture(event.pointerId); }} onPointerUp={(event) => { if (kickStart.current !== null && kickStart.current - event.clientY > 45) triggerGoal(); else setKickHint("海风把球送回来了，再果断地向上划一次"); kickStart.current = null; }}>⚽</button><div className="kick-trail" /></div>
+            <div className="act-heading"><span>FINAL · 闭环</span><h2>一脚破圈</h2><p>故事、符号、同伴与新梗已经就位。现在，把热爱踢出屏幕。</p></div>
+            <div className="goal-stage">
+              <div className="goal-net"><span>声浪出口</span></div>
+              <div className="ritual-orbit">
+                {RITUAL_ICONS.map((item) => (
+                  <i key={item.id}><PixelIcon src={item.icon} alt={item.label} /></i>
+                ))}
+              </div>
+              <button
+                className="kick-ball"
+                aria-label="向上划动足球完成射门"
+                onPointerDown={(event) => { kickStart.current = event.clientY; event.currentTarget.setPointerCapture(event.pointerId); }}
+                onPointerUp={(event) => {
+                  if (kickStart.current !== null && kickStart.current - event.clientY > 45) triggerGoal();
+                  else setKickHint("海风把球送回来了，再果断地向上划一次");
+                  kickStart.current = null;
+                }}
+              >
+                <PixelIcon src="/assets/button-icons-v2/swipe-kick.png" alt="足球" className="kick-ball-icon" />
+              </button>
+              <div className="kick-trail" />
+            </div>
             <div className="kick-instruction">{kickHint}</div>
-            <div className="kick-actions"><PixelButton onClick={triggerGoal} tone="secondary">模拟球门传感器进球</PixelButton><PixelButton onClick={() => setStage("result")} tone="ghost">无障碍助攻键</PixelButton></div>
+            <div className="kick-actions"><PixelButton onClick={triggerGoal} icon="/assets/button-icons-v2/goal-sensor.png" tone="secondary">模拟球门传感器进球</PixelButton><PixelButton onClick={() => setStage("result")} icon="/assets/button-icons-v2/assist.png" tone="ghost">无障碍助攻键</PixelButton></div>
           </div>
         )}
 
         {stage === "result" && (
           <div className="result-layout">
             <div className="pixel-burst" aria-hidden="true"><i /><i /><i /><i /><i /></div>
-            <span className="eyebrow">球进了 · 声浪出圈了</span>
+            <span className="eyebrow">GOAL · 球进了</span>
             <h2>闽超破圈，<br /><em>被你继续讲了一次。</em></h2>
             <p>{shareStatus}</p>
             <div className="result-card">{shareCardUrl ? <img src={shareCardUrl} alt="自动生成的闽超像素分享卡" /> : <div className="card-loading">像素卡正在显影…</div>}{qrDataUrl && <div className="share-qr"><img src={qrDataUrl} alt="在手机上继续体验的二维码" /><span>扫码带走声浪</span></div>}</div>
-            <div className="result-actions"><PixelButton onClick={() => void shareWork()} disabled={!shareCardUrl}>发布 / 分享给朋友</PixelButton>{shareCardUrl && <a className="pixel-button secondary" href={shareCardUrl} download="闽超声浪接力.png">保存像素卡</a>}<PixelButton onClick={resetGame} tone="ghost">把球交给下一位</PixelButton></div>
+            <div className="result-actions"><PixelButton onClick={() => void shareWork()} icon="/assets/button-icons-v2/share.png" disabled={!shareCardUrl}>发布 / 分享给朋友</PixelButton>{shareCardUrl && <a className="pixel-button secondary" href={shareCardUrl} download="闽超声浪接力.png"><PixelIcon src="/assets/button-icons-v2/save.png" alt="" className="button-icon" />保存像素卡</a>}<PixelButton onClick={resetGame} icon="/assets/button-icons-v2/pass-next.png" tone="ghost">把球交给下一位</PixelButton></div>
           </div>
         )}
       </section>
