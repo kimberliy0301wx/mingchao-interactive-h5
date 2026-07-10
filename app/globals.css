@@ -1432,6 +1432,538 @@ footer {
   }
 }
 
+/* —— Single-screen composition: no vertical page scrolling —— */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body { line-height: 1.42; }
+
+.game-shell {
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 5px;
+  padding: 7px clamp(8px, 1.8vw, 24px) 5px;
+}
+
+.topbar {
+  width: min(1180px, 100%);
+  min-height: 0;
+  margin: 0 auto;
+  align-items: center;
+}
+.brand-lockup {
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+}
+.brand-chip { padding: 3px 6px; font-size: 7px; }
+.brand-lockup strong { font-size: clamp(15px, 1.8vw, 22px); }
+.sensor-toggle {
+  min-height: 42px;
+  padding: 5px 13px;
+}
+.sensor-toggle .button-icon {
+  width: 28px !important;
+  height: 28px !important;
+  flex-basis: 28px;
+}
+
+.ritual-track {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  padding: 4px 8px 3px;
+  gap: 2px;
+}
+.ritual-track::before { top: 20px; }
+.track-step { gap: 2px; }
+.track-step > span {
+  width: 29px;
+  height: 29px;
+  border-width: 2px;
+}
+.track-step > span .pixel-icon { width: 20px; height: 20px; }
+.track-step small { font-size: 8px; line-height: 1.2; }
+
+.game-stage {
+  width: min(1180px, 100%);
+  height: 100%;
+  min-height: 0 !important;
+  margin: 0 auto;
+  border-width: 3px;
+  box-shadow:
+    0 0 0 2px var(--gold),
+    0 0 0 4px var(--black-line),
+    5px 5px 0 rgba(0, 40, 16, 0.36);
+}
+.stage-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.stage-fit {
+  width: 100%;
+  min-height: 100%;
+  display: grid;
+  transform: scale(var(--stage-scale, 1));
+  transform-origin: top center;
+  will-change: transform;
+}
+.stage-fit > .intro-layout,
+.stage-fit > .act-layout,
+.stage-fit > .result-layout {
+  min-height: 100%;
+}
+
+.intro-layout {
+  min-height: 0;
+  height: 100%;
+  padding: clamp(10px, 2vh, 20px) clamp(14px, 3vw, 34px);
+  gap: 8px;
+}
+.hero-copy h1 {
+  font-size: clamp(30px, 4.6vw, 58px);
+  margin: 9px 0 8px;
+  line-height: 1.05;
+}
+.hero-copy p {
+  margin-bottom: 8px;
+  line-height: 1.52;
+  font-size: clamp(12px, 1.25vw, 15px);
+}
+.no-data-note { margin-top: 7px; padding: 4px 7px; font-size: 9px; }
+.guide-scene {
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+}
+.guide-scene > img {
+  width: auto;
+  max-width: 96%;
+  height: 92%;
+  max-height: 460px;
+  object-fit: contain;
+}
+.speech-bubble {
+  top: 8px;
+  max-width: 230px;
+  padding: 8px 10px 11px;
+  font-size: 11px;
+}
+.orbit-token {
+  width: 42px;
+  height: 42px;
+  padding: 6px;
+}
+
+.act-layout {
+  min-height: 0;
+  height: 100%;
+  padding: clamp(9px, 1.7vh, 17px) clamp(14px, 2.5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.act-heading {
+  flex: 0 0 auto;
+  margin: 0;
+  column-gap: 9px;
+}
+.act-heading > span {
+  padding: 6px 6px;
+  border-bottom-width: 5px;
+}
+.act-heading h2 {
+  font-size: clamp(23px, 3vw, 36px);
+  line-height: 1.05;
+}
+.act-heading p {
+  margin: 3px 0 0;
+  line-height: 1.35;
+  font-size: 13px;
+}
+.act-actions {
+  flex: 0 0 auto;
+  margin: 0;
+  gap: 6px;
+}
+.soft-message {
+  margin: 0;
+  padding: 7px 10px;
+  line-height: 1.35;
+}
+.pixel-button {
+  min-height: 48px;
+  padding: 7px 18px 10px;
+}
+.button-icon {
+  width: 31px !important;
+  height: 31px !important;
+  flex-basis: 31px;
+}
+
+.story-doors {
+  flex: 0 1 auto;
+  gap: 8px;
+}
+.story-door {
+  min-height: 104px;
+  gap: 3px;
+  padding: 11px 15px;
+  grid-template-columns: 68px 1fr;
+}
+.story-door .choice-icon { width: 60px; height: 60px; }
+.memory-board {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  gap: 6px;
+}
+.fragment-row { gap: 6px; }
+.fragment-row button {
+  min-height: 60px;
+  padding: 6px 9px;
+  gap: 5px;
+}
+.fragment-row button .pixel-icon {
+  width: 42px !important;
+  height: 42px !important;
+  flex-basis: 42px;
+}
+.memory-board blockquote {
+  padding: 7px 11px;
+  line-height: 1.45;
+}
+.heart-hold {
+  min-height: 64px;
+  padding: 5px 14px;
+  gap: 8px;
+}
+.heart-visual { width: 48px; height: 48px; }
+.heart-icon { width: 44px !important; height: 44px !important; }
+
+.symbol-workshop,
+.remix-workshop,
+.photo-studio {
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 10px;
+}
+.symbol-palette {
+  min-height: 0;
+  padding: 7px;
+}
+.symbol-palette h3 { margin: 0 0 3px; font-size: 11px; }
+.symbol-palette button {
+  min-height: 0;
+  margin-top: 3px;
+  padding: 3px 7px;
+  grid-template-columns: 38px 1fr;
+}
+.symbol-palette button b { width: 29px; height: 29px; }
+.symbol-palette button b .pixel-icon {
+  width: 38px !important;
+  height: 38px !important;
+}
+.pixel-flag {
+  height: 100%;
+  min-height: 0;
+}
+.flag-cloth {
+  width: 88%;
+  height: 86%;
+  min-height: 0;
+  padding: 16px 22px;
+}
+.flag-cloth span { min-width: 44px; height: 44px; }
+.symbol-message {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 7px 10px;
+  line-height: 1.3;
+}
+
+.footpads {
+  flex: 0 1 150px;
+  width: min(780px, 100%);
+  min-height: 0;
+  margin: 0 auto;
+}
+.footpads > button {
+  min-height: 112px;
+  padding: 7px;
+  gap: 2px;
+}
+.foot-icon { width: 58px !important; height: 58px !important; }
+.chant-console {
+  flex: 1 1 auto;
+  width: min(800px, 100%);
+  min-height: 0;
+  margin: 0 auto;
+  padding: 7px 10px;
+  gap: 6px;
+  grid-template-columns: auto minmax(120px, 1fr) auto;
+  align-items: center;
+  justify-items: center;
+}
+.sound-ripples { width: 110px; height: 42px; }
+.sound-ripples i { width: 15px; height: 15px; border-width: 3px; }
+.chant-buttons { flex-wrap: nowrap; gap: 5px; }
+.chant-buttons .pixel-button { min-height: 44px; padding-inline: 12px; }
+
+.photo-studio { align-items: stretch; }
+.camera-frame,
+.avatar-stage,
+.camera-frame video,
+.camera-frame > img {
+  height: 100%;
+  min-height: 0;
+}
+.avatar-stage img { max-height: 100%; }
+.camera-overlay { inset: auto 7px 7px; padding: 5px; font-size: 11px; }
+.photo-controls { align-content: center; gap: 6px; }
+.photo-controls p { margin: 0; line-height: 1.35; }
+
+.remix-controls {
+  min-height: 0;
+  padding: 8px;
+  gap: 6px;
+}
+.remix-controls label { gap: 2px; }
+.remix-controls select { padding: 5px 7px; }
+.remix-controls fieldset { gap: 4px; padding: 4px 7px 7px; }
+.remix-controls fieldset button { width: 36px; height: 36px; }
+.remix-preview,
+.remix-preview > img {
+  height: 100%;
+  min-height: 0;
+}
+.meme-caption { bottom: 34px; padding: 6px 9px; }
+
+.goal-stage {
+  flex: 1 1 auto;
+  width: min(760px, 100%);
+  min-height: 0;
+  height: auto;
+  margin: 0 auto;
+}
+.kick-instruction {
+  flex: 0 0 auto;
+  margin: 0 auto;
+  padding: 6px 9px;
+  line-height: 1.3;
+}
+.kick-actions { flex: 0 0 auto; gap: 6px; }
+
+.result-layout {
+  min-height: 0;
+  height: 100%;
+  padding: clamp(10px, 2vh, 20px) clamp(14px, 3vw, 32px);
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.62fr);
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  column-gap: clamp(12px, 2vw, 28px);
+  align-content: stretch;
+}
+.result-layout h2 {
+  font-size: clamp(29px, 4vw, 50px);
+  margin: 7px 0;
+}
+.result-layout > p { margin-bottom: 5px; line-height: 1.35; }
+.result-card {
+  width: auto;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+}
+.result-actions {
+  gap: 5px;
+  align-self: center;
+}
+.share-qr { right: 5px; bottom: 5px; padding: 3px; }
+.share-qr img { width: 62px; height: 62px; }
+
+footer {
+  width: min(1180px, 100%);
+  min-height: 11px;
+  margin: 0 auto;
+  padding: 0 2px;
+  font-size: 8px;
+  line-height: 1.15;
+}
+
+.sensor-panel {
+  top: 52px;
+  max-height: calc(100dvh - 58px);
+  overflow: hidden;
+  padding: 10px;
+}
+
+@media (max-width: 900px) {
+  .game-shell { padding: 6px 7px 4px; }
+  .ritual-track {
+    overflow: hidden;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .game-stage { min-height: 0 !important; }
+  .intro-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(190px, 0.72fr);
+    padding: 10px 16px;
+  }
+  .hero-copy { text-align: left; margin: 0; }
+  .hero-copy p,
+  .no-data-note { margin-left: 0; margin-right: 0; }
+  .guide-scene { min-height: 0; }
+  .story-doors { grid-template-columns: 1fr 1fr; }
+  .fragment-row { grid-template-columns: repeat(3, 1fr); }
+  .symbol-workshop { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+  .remix-workshop { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); }
+  .photo-studio { grid-template-columns: minmax(0, 1.18fr) minmax(170px, 0.82fr); }
+  .camera-frame,
+  .avatar-stage,
+  .camera-frame video,
+  .camera-frame > img,
+  .remix-preview,
+  .remix-preview > img { min-height: 0; }
+  .footpads { grid-template-columns: 1fr 52px 1fr; }
+  .result-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(170px, 0.68fr);
+    text-align: left;
+  }
+  .result-layout > .eyebrow,
+  .result-layout > h2,
+  .result-layout > p,
+  .result-layout > .result-actions { grid-column: 1; }
+  .result-card {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+  }
+  .result-actions { justify-content: flex-start; }
+}
+
+@media (max-width: 560px) {
+  .game-shell { gap: 3px; padding: 4px 5px 3px; }
+  .topbar { margin: 0; }
+  .brand-lockup strong { font-size: 14px; }
+  .sensor-toggle { min-height: 36px; padding: 3px 8px; }
+  .sensor-toggle .button-icon {
+    width: 24px !important;
+    height: 24px !important;
+    flex-basis: 24px;
+  }
+  .ritual-track { padding: 2px 5px; }
+  .ritual-track::before { top: 16px; }
+  .track-step > span { width: 25px; height: 25px; }
+  .track-step > span .pixel-icon { width: 17px; height: 17px; }
+  .intro-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(130px, 0.7fr);
+    padding: 8px 10px;
+  }
+  .hero-copy h1 { font-size: clamp(24px, 8vw, 38px); }
+  .speech-bubble { max-width: 150px; font-size: 9px; }
+  .act-layout { padding: 7px 9px; }
+  .act-heading {
+    grid-template-columns: auto 1fr;
+    column-gap: 7px;
+  }
+  .act-heading > span {
+    grid-row: span 2;
+    writing-mode: vertical-rl;
+    justify-self: stretch;
+    margin: 0;
+  }
+  .act-heading h2 { font-size: 22px; }
+  .act-heading p { font-size: 11px; }
+  .story-door {
+    min-height: 86px;
+    padding: 8px;
+    grid-template-columns: 52px 1fr;
+  }
+  .story-door .choice-icon { width: 48px; height: 48px; }
+  .story-door strong { font-size: 15px; }
+  .story-door span { font-size: 10px; }
+  .fragment-row button { padding: 4px; font-size: 11px; }
+  .fragment-row button .pixel-icon {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px;
+  }
+  .memory-board blockquote { font-size: 11px; }
+  .heart-hold { min-height: 54px; }
+  .symbol-workshop { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); }
+  .symbol-palette button { font-size: 10px; }
+  .flag-cloth { padding: 10px; }
+  .photo-studio { grid-template-columns: minmax(0, 1.05fr) minmax(120px, 0.95fr); }
+  .photo-controls { font-size: 11px; }
+  .remix-workshop { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+  .remix-controls { font-size: 10px; }
+  .remix-controls fieldset button { width: 31px; height: 31px; }
+  .pixel-button { width: auto; min-height: 42px; padding: 5px 11px 7px; font-size: 11px; }
+  .button-icon {
+    width: 27px !important;
+    height: 27px !important;
+    flex-basis: 27px;
+  }
+  .footpads {
+    grid-template-columns: 1fr 40px 1fr;
+    gap: 4px;
+  }
+  .footpads > button { min-height: 92px; }
+  .pass-line { width: auto; height: 7px; }
+  .chant-console {
+    grid-template-columns: auto 1fr;
+    font-size: 11px;
+  }
+  .chant-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    width: auto;
+  }
+  .kick-actions,
+  .result-actions { display: flex; width: auto; }
+  .goal-stage { height: auto; }
+  .goal-net { width: 68%; }
+  .result-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(130px, 0.66fr);
+    padding: 8px 10px;
+  }
+  .result-layout h2 { font-size: 25px; }
+  .result-card { width: auto; margin: 0; }
+  footer {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+  }
+  footer span:last-child { display: none; }
+}
+
+@media (max-height: 720px) {
+  .brand-chip,
+  .track-step small,
+  footer { display: none; }
+  .game-shell { grid-template-rows: auto auto minmax(0, 1fr); }
+  .topbar { min-height: 31px; }
+  .sensor-toggle { min-height: 32px; }
+  .ritual-track::before { top: 14px; }
+  .track-step > span { width: 23px; height: 23px; }
+  .track-step > span .pixel-icon { width: 16px; height: 16px; }
+  .act-layout { padding-block: 6px; gap: 4px; }
+  .act-heading h2 { font-size: clamp(19px, 3vw, 29px); }
+  .act-heading p { font-size: 10px; }
+  .story-door { min-height: 78px; }
+  .fragment-row button { min-height: 50px; }
+  .heart-hold { min-height: 50px; }
+  .pixel-button { min-height: 39px; }
+  .goal-stage { margin: 0 auto; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -1671,4 +2203,72 @@ footer {
     width: 64px;
     height: 64px;
   }
+}
+
+/* Keep generated button artwork compact inside the single-screen shell. */
+.pixel-button {
+  min-height: 48px;
+  padding: 7px 18px 10px;
+}
+.button-icon {
+  width: 31px !important;
+  height: 31px !important;
+  flex-basis: 31px;
+}
+.sensor-toggle {
+  min-height: 42px;
+  padding: 5px 13px;
+}
+.sensor-toggle .button-icon {
+  width: 28px !important;
+  height: 28px !important;
+  flex-basis: 28px;
+}
+.sensor-sim-row button {
+  min-height: 52px;
+  padding: 5px 7px;
+}
+.sensor-sim-row .button-icon {
+  width: 27px !important;
+  height: 27px !important;
+  flex-basis: 27px;
+}
+.story-door {
+  grid-template-columns: 68px 1fr;
+  padding: 11px 15px;
+}
+.story-door .choice-icon { width: 60px; height: 60px; }
+.fragment-row button .pixel-icon {
+  width: 42px !important;
+  height: 42px !important;
+  flex-basis: 42px;
+}
+.symbol-palette button b .pixel-icon {
+  width: 38px !important;
+  height: 38px !important;
+}
+.foot-icon {
+  width: 58px !important;
+  height: 58px !important;
+}
+
+@media (max-width: 560px) {
+  .pixel-button {
+    min-height: 42px;
+    padding: 5px 11px 7px;
+  }
+  .button-icon {
+    width: 27px !important;
+    height: 27px !important;
+    flex-basis: 27px;
+  }
+  .story-door {
+    grid-template-columns: 52px 1fr;
+    padding: 8px;
+  }
+  .story-door .choice-icon { width: 48px; height: 48px; }
+}
+
+@media (max-height: 720px) {
+  .pixel-button { min-height: 39px; }
 }

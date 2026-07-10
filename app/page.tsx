@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import QRCode from "qrcode";
 
 type Stage = "intro" | "story" | "symbols" | "social" | "remix" | "kick" | "result";
@@ -100,6 +101,7 @@ export default function Home() {
   const [shareCardUrl, setShareCardUrl] = useState("");
   const [qrDataUrl, setQrDataUrl] = useState("");
   const [shareStatus, setShareStatus] = useState("把这份声浪交给下一位球迷");
+  const [stageScale, setStageScale] = useState(1);
 
   const holdTimer = useRef<number | null>(null);
   const kickStart = useRef<number | null>(null);
@@ -108,6 +110,8 @@ export default function Home() {
   const audioStream = useRef<MediaStream | null>(null);
   const audioContext = useRef<AudioContext | null>(null);
   const audioFrame = useRef<number | null>(null);
+  const stageViewportRef = useRef<HTMLDivElement>(null);
+  const stageContentRef = useRef<HTMLDivElement>(null);
 
   const currentIndex = stage === "result" ? STAGES.length : STAGES.findIndex((item) => item.key === stage);
   const symbolState = selectedSymbols.length < 2 ? "too-light" : selectedSymbols.length > 3 ? "too-crowded" : "just-right";
@@ -158,6 +162,32 @@ export default function Home() {
     window.addEventListener("mingchao:sensor", handleSensor);
     return () => window.removeEventListener("mingchao:sensor", handleSensor);
   }, [stage]);
+
+  useEffect(() => {
+    const viewport = stageViewportRef.current;
+    const content = stageContentRef.current;
+    if (!viewport || !content) return;
+    let frame = 0;
+    const fitStage = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const availableWidth = Math.max(1, viewport.clientWidth - 2);
+        const availableHeight = Math.max(1, viewport.clientHeight - 2);
+        const naturalWidth = Math.max(1, content.scrollWidth);
+        const naturalHeight = Math.max(1, content.scrollHeight);
+        const nextScale = Math.min(1, availableWidth / naturalWidth, availableHeight / naturalHeight);
+        setStageScale((current) => Math.abs(current - nextScale) > 0.005 ? nextScale : current);
+      });
+    };
+    const observer = new ResizeObserver(fitStage);
+    observer.observe(viewport);
+    observer.observe(content);
+    fitStage();
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(frame);
+    };
+  }, [stage, storyMode, chantComplete, cameraOn, capturedPhoto, remixReady, shareCardUrl, sensorPanel]);
 
   const startHeartHold = () => {
     if (memories.length !== MEMORY_FRAGMENTS.length) return;
@@ -438,6 +468,8 @@ export default function Home() {
 
       <section className="game-stage" aria-live="polite">
         <div className="stage-corners" aria-hidden="true"><i /><i /><i /><i /></div>
+        <div className="stage-viewport" ref={stageViewportRef}>
+          <div className="stage-fit" ref={stageContentRef} style={{ "--stage-scale": stageScale } as CSSProperties}>
         {stage === "intro" && (
           <div className="intro-layout">
             <div className="hero-copy">
@@ -638,6 +670,8 @@ export default function Home() {
             <div className="result-actions"><PixelButton onClick={() => void shareWork()} icon="/assets/button-icons-v2/share.png" disabled={!shareCardUrl}>发布 / 分享给朋友</PixelButton>{shareCardUrl && <a className="pixel-button secondary" href={shareCardUrl} download="闽超声浪接力.png"><PixelIcon src="/assets/button-icons-v2/save.png" alt="" className="button-icon" />保存像素卡</a>}<PixelButton onClick={resetGame} icon="/assets/button-icons-v2/pass-next.png" tone="ghost">把球交给下一位</PixelButton></div>
           </div>
         )}
+          </div>
+        </div>
       </section>
 
       <footer><span>原创互动原型 · 不使用真实赛事数据</span><span>镜头与麦克风仅在你主动开启时使用</span></footer>
