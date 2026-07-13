@@ -2952,3 +2952,284 @@ footer {
   .symbol-palette button { min-height: 36px; }
   .footpads > button { min-height: 94px; }
 }
+
+/* —— Mobile density correction from annotated review —— */
+@media (max-width: 640px) and (orientation: portrait) {
+  /* Every primary continuation action receives a full-width, high-emphasis zone. */
+  .act-actions {
+    width: 100% !important;
+    align-self: stretch !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 3px;
+  }
+
+  .act-actions .pixel-button,
+  .hero-copy .pixel-button {
+    width: 100% !important;
+    min-height: 64px;
+    padding: 8px 18px 11px;
+    gap: 9px;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 0.035em;
+    justify-content: center;
+    filter: saturate(1.08);
+  }
+
+  .act-actions .pixel-button:disabled {
+    opacity: 0.78;
+    filter: grayscale(0.28) saturate(0.78) brightness(0.98);
+  }
+
+  .act-actions .button-icon,
+  .hero-copy .button-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px;
+  }
+
+  /* Choice cards use their vertical space for information instead of decoration. */
+  .story-door {
+    min-height: 104px;
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: 7px;
+    row-gap: 3px;
+    padding: 9px 10px;
+  }
+
+  .story-door .choice-icon { width: 48px; height: 48px; }
+
+  .story-door strong,
+  .story-door span {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .story-door strong {
+    font-size: 17px;
+    line-height: 1.22;
+  }
+
+  .story-door span {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  /* H1: three memory cards, quote and heartbeat share the available stage evenly. */
+  .stage-story .memory-board {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-rows:
+      minmax(132px, 1.08fr)
+      minmax(100px, 0.76fr)
+      minmax(98px, 0.74fr);
+    align-content: stretch;
+    gap: 7px;
+    margin: 0;
+  }
+
+  .stage-story .fragment-row {
+    height: 100%;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  .stage-story .fragment-row button {
+    height: 100%;
+    min-height: 0;
+    padding: 10px 6px;
+    grid-template-rows: 52px auto;
+    align-content: center;
+    justify-content: stretch;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .stage-story .fragment-row button .pixel-icon {
+    width: 50px !important;
+    height: 50px !important;
+    flex-basis: 50px;
+  }
+
+  .stage-story .fragment-row button span {
+    max-width: 9em;
+    margin: 0 auto;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .stage-story .memory-board blockquote {
+    min-height: 0;
+    margin: 0;
+    padding: 12px clamp(34px, 9vw, 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.62;
+    letter-spacing: 0.025em;
+    text-wrap: balance;
+  }
+
+  .stage-story .heart-hold {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    justify-content: stretch;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 26px;
+    text-align: left;
+    background-size: calc(100% + 24px) 100% !important;
+    background-position: center !important;
+  }
+
+  .stage-story .heart-visual {
+    width: 64px;
+    height: 64px;
+    justify-self: center;
+  }
+
+  .stage-story .heart-icon {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .stage-story .heart-copy {
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+    text-align: left;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  /* Supporting copy across other stages follows the same readable density. */
+  .soft-message,
+  .symbol-message,
+  .kick-instruction,
+  .photo-controls p,
+  .chant-console > strong,
+  .result-layout > p {
+    font-size: 13px;
+    line-height: 1.45;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .soft-message,
+  .symbol-message,
+  .kick-instruction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 8px 12px;
+    text-align: center;
+  }
+
+  .symbol-palette button {
+    min-height: 44px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .symbol-palette button b .pixel-icon {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  .footpads > button {
+    min-height: 112px;
+  }
+
+  .footpads b { font-size: 18px; }
+  .footpads span {
+    max-width: 9em;
+    font-size: 11px;
+    line-height: 1.3;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .photo-controls .pixel-button,
+  .chant-buttons .pixel-button,
+  .kick-actions .pixel-button,
+  .result-actions .pixel-button {
+    min-height: 48px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .remix-controls label,
+  .remix-controls legend {
+    font-size: 11px;
+  }
+
+  .remix-controls select {
+    min-height: 38px;
+    font-size: 12px;
+  }
+
+  .result-layout h2 {
+    font-size: 29px;
+    line-height: 1.14;
+    text-wrap: balance;
+  }
+}
+
+@media (max-width: 380px) and (orientation: portrait) {
+  .act-actions .pixel-button,
+  .hero-copy .pixel-button {
+    min-height: 54px;
+    font-size: 13px;
+  }
+
+  .stage-story .memory-board {
+    grid-template-rows:
+      minmax(116px, 1fr)
+      minmax(88px, 0.72fr)
+      minmax(86px, 0.7fr);
+    gap: 5px;
+  }
+
+  .stage-story .fragment-row button {
+    padding: 7px 4px;
+    grid-template-rows: 43px auto;
+    font-size: 11px;
+  }
+
+  .stage-story .fragment-row button .pixel-icon {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .stage-story .memory-board blockquote {
+    padding-inline: 25px;
+    font-size: 13px;
+  }
+
+  .stage-story .heart-hold {
+    grid-template-columns: 56px minmax(0, 1fr);
+    padding: 8px 20px;
+  }
+
+  .stage-story .heart-visual { width: 52px; height: 52px; }
+  .stage-story .heart-icon { width: 48px !important; height: 48px !important; }
+  .stage-story .heart-copy { font-size: 14px; }
+}
+
+/* Primary actions must retain their generated gold plaque over legacy shorthand rules. */
+.pixel-button.primary {
+  background-color: transparent !important;
+  background-image: url("/assets/button-skins-v2/primary.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+}
