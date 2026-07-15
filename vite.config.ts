@@ -55,7 +55,10 @@ export default defineConfig(async () => {
         name: "sites-strip-duplicate-server-static-assets",
         apply: "build",
         async closeBundle() {
-          await rm("dist/server/assets", { recursive: true, force: true });
+          await Promise.all([
+            rm("dist/server/assets", { recursive: true, force: true }),
+            rm("dist/server/og.jpg", { force: true }),
+          ]);
         },
       },
       cloudflare({
