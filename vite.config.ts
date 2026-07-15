@@ -52,10 +52,10 @@ export default defineConfig(async () => {
       vinext(),
       sites(),
       {
-        name: "sites-strip-duplicate-server-audio",
+        name: "sites-strip-duplicate-server-static-assets",
         apply: "build",
         async closeBundle() {
-          await rm("dist/server/assets/audio", { recursive: true, force: true });
+          await rm("dist/server/assets", { recursive: true, force: true });
         },
       },
       cloudflare({
