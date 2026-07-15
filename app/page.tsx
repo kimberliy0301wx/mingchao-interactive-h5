@@ -230,6 +230,32 @@ export default function Home() {
   const symbolState = selectedSymbols.length < 2 ? "too-light" : selectedSymbols.length > 3 ? "too-crowded" : "just-right";
   const symbolMessage = symbolState === "too-light" ? "还看不出你从哪来，选一个最想被记住的符号。" : symbolState === "too-crowded" ? "符号都在抢话，删掉一个，让主角先说。" : "刚刚好，一眼认出，一眼记住。";
 
+  useEffect(() => {
+    const visualViewport = window.visualViewport;
+    let frame = 0;
+
+    const syncAppHeight = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const visibleHeight = Math.round(visualViewport?.height ?? window.innerHeight);
+        document.documentElement.style.setProperty("--app-height", `${visibleHeight}px`);
+      });
+    };
+
+    syncAppHeight();
+    window.addEventListener("resize", syncAppHeight);
+    window.addEventListener("orientationchange", syncAppHeight);
+    visualViewport?.addEventListener("resize", syncAppHeight);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", syncAppHeight);
+      window.removeEventListener("orientationchange", syncAppHeight);
+      visualViewport?.removeEventListener("resize", syncAppHeight);
+      document.documentElement.style.removeProperty("--app-height");
+    };
+  }, []);
+
   const playClip = useCallback((audio: HTMLAudioElement | null, volume: number) => {
     if (!audio || !soundEnabledRef.current) return;
     audio.volume = volume;
