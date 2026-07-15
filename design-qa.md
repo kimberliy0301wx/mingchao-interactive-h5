@@ -68,6 +68,15 @@
 - At 330 x 624, verified the top-right global sound switch stays inside the viewport: switching it off pauses the BGM and every active sound effect, while switching it on resumes the BGM. The phone-sensor control remains available inside the social and kick stages.
 - Checked in-app browser console errors after returning to ACT 1: none.
 
+**Mobile Visual Viewport Fix (2026-07-15)**
+
+- Source screenshots: `/var/folders/c5/tl78l_5s0j30qj0kkcvsb5l00000gn/T/codex-clipboard-70127870-168e-478c-8e4e-abd941399889.png` (intro) and `/var/folders/c5/tl78l_5s0j30qj0kkcvsb5l00000gn/T/codex-clipboard-a7a1d651-8bb5-4d01-a97f-7899bb07655e.png` (social photo).
+- Compared both source screenshots side by side with current 339 x 623 browser renders. The intro title, CTA, speech bubble, guide character, and four ritual tokens fill the single-screen stage without the previous blank vertical gaps.
+- The ACT 3 comparison keeps the complete photo frame, consent controls, and continuation plaque visible in one screen.
+- Rechecked at 402 x 686, matching the reported iPhone/WeChat visible content area. `--app-height` measured 686 px, while the shell measured exactly 402 x 686; the stage-fit content height matched its 590 px viewport in both intro and ACT 3 states.
+- Exercised the real interaction path from intro through ACT 3: selected the emotional story, restored all three memories, completed the 1.2-second hold, selected two city symbols, activated both social pads, and completed three applause interactions.
+- Browser console errors after the responsive verification: none.
+
 **Findings**
 
 - No remaining P0, P1, or P2 issues in the requested surfaces.
