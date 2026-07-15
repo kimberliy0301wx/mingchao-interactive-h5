@@ -1,3 +1,4 @@
+import { rm } from "node:fs/promises";
 import vinext from "vinext";
 import { defineConfig } from "vite";
 import hostingConfig from "./.openai/hosting.json";
@@ -50,6 +51,13 @@ export default defineConfig(async () => {
     plugins: [
       vinext(),
       sites(),
+      {
+        name: "sites-strip-duplicate-server-audio",
+        apply: "build",
+        async closeBundle() {
+          await rm("dist/server/assets/audio", { recursive: true, force: true });
+        },
+      },
       cloudflare({
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
         config: localBindingConfig,
