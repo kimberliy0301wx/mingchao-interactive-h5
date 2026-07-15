@@ -46,6 +46,7 @@ test("keeps the experience fixed and gates entry on decoded assets", async () =>
   ]);
 
   assert.match(page, /const PRELOAD_ASSETS/);
+  assert.match(page, /\/assets\/guide\.png/);
   assert.match(page, /\/assets\/button-icons-v2\/memory-on\.avif/);
   assert.match(page, /waitForRenderedImage\(introGuideRef\.current\)/);
   assert.match(page, /cache: "force-cache"/);

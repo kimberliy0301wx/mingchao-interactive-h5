@@ -62,7 +62,7 @@ const PRELOAD_ASSETS = Array.from(new Set([
   ...STICKERS.map((item) => item.icon),
   ...RITUAL_ICONS.map((item) => item.icon),
   "/assets/stadium-bg.avif",
-  "/assets/guide.avif",
+  "/assets/guide.png",
   "/assets/guide-icon.png",
   "/assets/cheer-squad.avif",
   "/assets/audio/bgm-0714.m4a",
@@ -1196,7 +1196,7 @@ export default function Home() {
                   <PixelIcon src={item.icon} alt={item.label} />
                 </div>
               ))}
-              <img ref={introGuideRef} src="/assets/guide.avif" alt="原创像素引导员小闽火，手托发光足球" loading="eager" decoding="sync" fetchPriority="high" />
+              <img ref={introGuideRef} src="/assets/guide.png" alt="原创像素引导员小闽火，手托发光足球" loading="eager" decoding="sync" fetchPriority="high" />
               <div className="speech-bubble">“闽超缺的不是观众，<br />是把热爱传给下一位的那一脚。”</div>
             </div>
           </div>
