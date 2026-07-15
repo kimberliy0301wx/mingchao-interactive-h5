@@ -92,6 +92,7 @@ const PRELOAD_ASSETS = Array.from(new Set([
   "/assets/button-icons-v2/goal-sensor.avif",
   "/assets/button-icons-v2/heart-memory.avif",
   "/assets/button-icons-v2/info-card.avif",
+  "/assets/button-icons-v2/memory-on.avif",
   "/assets/button-icons-v2/microphone.avif",
   "/assets/button-icons-v2/pass-next.avif",
   "/assets/button-icons-v2/remix.avif",
@@ -109,12 +110,35 @@ function PixelIcon({ src, alt = "", className = "" }: { src: string; alt?: strin
   return <img className={`pixel-icon ${className}`} src={src} alt={alt} draggable={false} />;
 }
 
+const IMAGE_ASSET_PATTERN = /\.(?:avif|png|jpe?g|webp|gif|svg)(?:\?.*)?$/i;
+
 function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
-    image.onload = () => resolve(image);
+    image.decoding = "async";
+    image.loading = "eager";
+    image.onload = () => {
+      const decode = image.decode?.();
+      if (!decode) {
+        resolve(image);
+        return;
+      }
+      void decode.catch(() => undefined).finally(() => resolve(image));
+    };
     image.onerror = reject;
     image.src = src;
+  });
+}
+
+function waitForRenderedImage(image: HTMLImageElement | null) {
+  if (!image) return Promise.resolve();
+  if (image.complete) {
+    return image.naturalWidth > 0 ? Promise.resolve() : Promise.reject(new Error(`Unable to render ${image.currentSrc || image.src}`));
+  }
+
+  return new Promise<void>((resolve, reject) => {
+    image.addEventListener("load", () => resolve(), { once: true });
+    image.addEventListener("error", () => reject(new Error(`Unable to render ${image.currentSrc || image.src}`)), { once: true });
   });
 }
 
@@ -123,19 +147,13 @@ async function preloadAsset(src: string) {
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
     try {
+      if (IMAGE_ASSET_PATTERN.test(src)) {
+        return await loadImage(src);
+      }
+
       const response = await fetch(src, { cache: "force-cache" });
       if (!response.ok) throw new Error(`Unable to preload ${src}: ${response.status}`);
-      const blob = await response.blob();
-
-      if (blob.type.startsWith("image/")) {
-        const objectUrl = URL.createObjectURL(blob);
-        try {
-          await loadImage(objectUrl);
-        } finally {
-          URL.revokeObjectURL(objectUrl);
-        }
-      }
-      return;
+      return null;
     } catch (error) {
       lastError = error;
     }
@@ -225,6 +243,8 @@ export default function Home() {
   const stageViewportRef = useRef<HTMLDivElement>(null);
   const stageContentRef = useRef<HTMLDivElement>(null);
   const preloadRunRef = useRef(0);
+  const preloadedImagesRef = useRef<HTMLImageElement[]>([]);
+  const introGuideRef = useRef<HTMLImageElement>(null);
 
   const currentIndex = stage === "result" ? STAGES.length : STAGES.findIndex((item) => item.key === stage);
   const symbolState = selectedSymbols.length < 2 ? "too-light" : selectedSymbols.length > 3 ? "too-crowded" : "just-right";
@@ -380,7 +400,8 @@ export default function Home() {
     preloadRunRef.current = run;
     let completed = 0;
     let failures = 0;
-    const total = PRELOAD_ASSETS.length + 1;
+    const retainedImages: HTMLImageElement[] = [];
+    const total = PRELOAD_ASSETS.length + 2;
 
     setPreloadProgress(0);
     setPreloadFailures(0);
@@ -396,7 +417,8 @@ export default function Home() {
     const runPreload = async () => {
       await Promise.all(PRELOAD_ASSETS.map(async (src) => {
         try {
-          await preloadAsset(src);
+          const asset = await preloadAsset(src);
+          if (asset) retainedImages.push(asset);
         } catch {
           failures += 1;
         } finally {
@@ -412,11 +434,20 @@ export default function Home() {
       }
       markComplete();
 
+      try {
+        await waitForRenderedImage(introGuideRef.current);
+      } catch {
+        failures += 1;
+      } finally {
+        markComplete();
+      }
+
       await new Promise<void>((resolve) => window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => resolve());
       }));
 
       if (preloadRunRef.current !== run) return;
+      preloadedImagesRef.current = retainedImages;
       setPreloadFailures(failures);
       setPreloadReady(failures === 0);
       setPreloadProgress(100);
@@ -1165,7 +1196,7 @@ export default function Home() {
                   <PixelIcon src={item.icon} alt={item.label} />
                 </div>
               ))}
-              <img src="/assets/guide.avif" alt="原创像素引导员小闽火，手托发光足球" />
+              <img ref={introGuideRef} src="/assets/guide.avif" alt="原创像素引导员小闽火，手托发光足球" loading="eager" decoding="sync" fetchPriority="high" />
               <div className="speech-bubble">“闽超缺的不是观众，<br />是把热爱传给下一位的那一脚。”</div>
             </div>
           </div>
