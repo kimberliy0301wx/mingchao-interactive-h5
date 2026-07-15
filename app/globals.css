@@ -26,6 +26,15 @@
 
 * { box-sizing: border-box; }
 html { background: var(--pitch-dark); image-rendering: pixelated; }
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
 body {
   margin: 0;
   background: var(--pitch-dark);
@@ -34,6 +43,9 @@ body {
   font-size: 16px;
   line-height: 1.65;
   letter-spacing: 0.02em;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 button, select, a { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -56,7 +68,7 @@ button:focus-visible, a:focus-visible, select:focus-visible {
   z-index: -2;
   background:
     linear-gradient(180deg, rgba(8, 90, 40, 0.35), rgba(4, 50, 24, 0.55) 40%, rgba(4, 40, 20, 0.72)),
-    url("/assets/stadium-bg.png") center / cover no-repeat;
+    url("/assets/stadium-bg.avif") center / cover no-repeat;
   image-rendering: pixelated;
   filter: saturate(1.55) contrast(1.12) brightness(1.05);
 }
@@ -2061,7 +2073,7 @@ footer {
 /* —— Generated image asset layer: every interactive button uses authored pixel artwork —— */
 .pixel-button {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/primary.png");
+  background-image: url("/assets/button-skins-v2/primary.avif");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -2079,11 +2091,11 @@ footer {
 }
 .pixel-button.secondary {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/secondary.png");
+  background-image: url("/assets/button-skins-v2/secondary.avif");
 }
 .pixel-button.ghost {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/ghost.png");
+  background-image: url("/assets/button-skins-v2/ghost.avif");
 }
 .pixel-button:hover:not(:disabled) {
   filter: brightness(1.08) saturate(1.08);
@@ -2104,7 +2116,7 @@ footer {
 
 .sound-toggle {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/toggle.png");
+  background-image: url("/assets/button-skins-v2/toggle.avif");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -2138,7 +2150,7 @@ footer {
   padding: 5px 13px;
   color: var(--paper);
   background-color: transparent;
-  background-image: url("/assets/button-skins-v2/sensor.png");
+  background-image: url("/assets/button-skins-v2/sensor.avif");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -2158,7 +2170,7 @@ footer {
 }
 .sensor-sim-row button {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/sensor.png");
+  background-image: url("/assets/button-skins-v2/sensor.avif");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -2180,7 +2192,7 @@ footer {
 
 .story-door {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/choice.png") !important;
+  background-image: url("/assets/button-skins-v2/choice.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -2199,7 +2211,7 @@ footer {
 .story-door.info.selected,
 .story-door.emotion.selected {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/choice.png") !important;
+  background-image: url("/assets/button-skins-v2/choice.avif") !important;
   filter: brightness(1.18) saturate(1.12);
 }
 .story-door small { color: var(--sea-light); }
@@ -2216,7 +2228,7 @@ footer {
 .fragment-row button,
 .symbol-palette button {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/memory.png") !important;
+  background-image: url("/assets/button-skins-v2/memory.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -2226,7 +2238,7 @@ footer {
 .fragment-row button.restored,
 .symbol-palette button.picked {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/memory.png") !important;
+  background-image: url("/assets/button-skins-v2/memory.avif") !important;
   filter: brightness(1.05) saturate(1.18);
 }
 .fragment-row button .pixel-icon {
@@ -2241,7 +2253,7 @@ footer {
 
 .heart-hold {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/choice.png") !important;
+  background-image: url("/assets/button-skins-v2/choice.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -2251,13 +2263,13 @@ footer {
 }
 .heart-hold.ready {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/choice.png") !important;
+  background-image: url("/assets/button-skins-v2/choice.avif") !important;
   filter: brightness(1.14) saturate(1.12);
 }
 
 .footpads > button {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/choice.png") !important;
+  background-image: url("/assets/button-skins-v2/choice.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -2267,7 +2279,7 @@ footer {
 }
 .footpads > button.active {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/choice.png") !important;
+  background-image: url("/assets/button-skins-v2/choice.avif") !important;
   filter: brightness(1.2) saturate(1.15);
 }
 .foot-icon {
@@ -2277,7 +2289,7 @@ footer {
 
 .remix-controls fieldset button {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/sticker.png") !important;
+  background-image: url("/assets/button-skins-v2/sticker.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -2286,7 +2298,7 @@ footer {
 }
 .remix-controls fieldset button.selected {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/sticker.png") !important;
+  background-image: url("/assets/button-skins-v2/sticker.avif") !important;
   filter: brightness(1.22) saturate(1.16);
 }
 .remix-controls fieldset button .pixel-icon {
@@ -3356,7 +3368,7 @@ footer {
 /* Primary actions must retain their generated gold plaque over legacy shorthand rules. */
 .pixel-button.primary {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/primary.png") !important;
+  background-image: url("/assets/button-skins-v2/primary.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -3368,10 +3380,207 @@ footer {
   left: 0;
 }
 
+/* Full-screen asset gate. The complete H5 renders behind this layer while assets decode. */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding:
+    max(20px, env(safe-area-inset-top))
+    max(18px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom))
+    max(18px, env(safe-area-inset-left));
+  color: var(--paper);
+  background:
+    linear-gradient(180deg, rgba(4, 32, 22, 0.72), rgba(4, 56, 28, 0.92)),
+    url("/assets/stadium-bg.avif") center / cover no-repeat;
+  image-rendering: pixelated;
+  isolation: isolate;
+}
+
+.preloader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(47, 212, 106, 0.16) 0 48px,
+    rgba(3, 24, 16, 0.18) 48px 96px
+  );
+}
+
+.preloader-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 3px,
+    rgba(0, 0, 0, 0.15) 3px 4px
+  );
+  opacity: 0.72;
+}
+
+.preloader-content {
+  position: relative;
+  z-index: 1;
+  width: min(520px, 100%);
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.preloader-kicker {
+  min-height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 6px 12px;
+  color: var(--ink-deep);
+  background: var(--gold);
+  border: 3px solid var(--black-line);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+  font-family: var(--font-hud);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.preloader-icon {
+  width: 104px !important;
+  height: 104px !important;
+  margin: 24px 0 12px;
+  filter: drop-shadow(6px 7px 0 rgba(0, 0, 0, 0.45));
+  animation: preloader-ball 1.15s steps(4) infinite;
+}
+
+.preloader h1 {
+  max-width: 100%;
+  margin: 0;
+  color: var(--paper);
+  font-size: clamp(28px, 7vw, 52px);
+  line-height: 1.2;
+  text-shadow:
+    3px 0 0 var(--black-line),
+    -3px 0 0 var(--black-line),
+    0 3px 0 var(--black-line),
+    0 -3px 0 var(--black-line),
+    5px 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+.preloader p {
+  min-height: 30px;
+  margin: 10px 0 18px;
+  color: var(--paper-soft);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.preloader-meter {
+  position: relative;
+  width: 100%;
+  height: 28px;
+  overflow: hidden;
+  background: var(--ink-deep);
+  border: 4px solid var(--paper);
+  box-shadow: 5px 5px 0 var(--black-line);
+}
+
+.preloader-meter i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold) 0 22px,
+    #ffc52f 22px 44px
+  );
+  transition: width 160ms steps(4);
+}
+
+.preloader-percent {
+  min-height: 28px;
+  margin-top: 10px;
+  color: var(--gold);
+  font-family: var(--font-hud);
+  font-size: 12px;
+  text-shadow: 2px 2px 0 var(--black-line);
+}
+
+.preloader-enter {
+  width: min(340px, 100%);
+  min-height: 64px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  color: var(--ink-deep);
+  background: transparent url("/assets/button-skins-v2/primary.avif") center / 100% 100% no-repeat;
+  border: 0;
+  cursor: pointer;
+  font-weight: 800;
+  box-shadow: 6px 7px 0 rgba(0, 0, 0, 0.35);
+}
+
+.preloader-enter:active {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.preloader-enter .button-icon {
+  width: 34px !important;
+  height: 34px !important;
+  flex: 0 0 34px;
+}
+
+.preloader-wait {
+  min-height: 64px;
+  margin-top: 20px;
+  display: grid;
+  place-items: center;
+  color: var(--sea-light);
+  font-family: var(--font-hud);
+  font-size: 9px;
+  animation: hud-blink 1s steps(2) infinite;
+}
+
+.preloader.ready .preloader-icon {
+  animation: token-pulse 0.85s steps(3) infinite;
+}
+
+@keyframes preloader-ball {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(6deg); }
+}
+
+@media (max-width: 520px) {
+  .preloader-content { width: min(330px, 100%); }
+  .preloader-icon {
+    width: 82px !important;
+    height: 82px !important;
+    margin: 18px 0 10px;
+  }
+  .preloader h1 { font-size: clamp(27px, 9vw, 38px); }
+  .preloader p { margin: 8px 0 14px; font-size: 13px; }
+  .preloader-enter { min-height: 58px; margin-top: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader-icon,
+  .preloader-wait {
+    animation: none;
+  }
+  .preloader-meter i { transition: none; }
+}
+
 /* Readable low-saturation skins for voice, clap, camera, and save actions. */
 .pixel-button.secondary {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/secondary-readable.png") !important;
+  background-image: url("/assets/button-skins-v2/secondary-readable.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -3380,7 +3589,7 @@ footer {
 
 .pixel-button.ghost {
   background-color: transparent !important;
-  background-image: url("/assets/button-skins-v2/ghost-readable.png") !important;
+  background-image: url("/assets/button-skins-v2/ghost-readable.avif") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -3408,12 +3617,12 @@ footer {
 /* ACT 1: use clean-edged plaques so copy never leaks past the card frame. */
 .story-door.info,
 .story-door.info.selected {
-  background-image: url("/assets/button-skins-v2/secondary-readable.png") !important;
+  background-image: url("/assets/button-skins-v2/secondary-readable.avif") !important;
 }
 
 .story-door.emotion,
 .story-door.emotion.selected {
-  background-image: url("/assets/button-skins-v2/ghost-readable.png") !important;
+  background-image: url("/assets/button-skins-v2/ghost-readable.avif") !important;
 }
 
 .story-door,

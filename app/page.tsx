@@ -19,41 +19,91 @@ type FeedbackDialog = {
 };
 
 const STAGES: Array<{ key: Stage; label: string; icon: string }> = [
-  { key: "intro", label: "入场", icon: "/assets/button-icons-v2/intro.png" },
-  { key: "story", label: "情感火种", icon: "/assets/button-icons-v2/fire.png" },
-  { key: "symbols", label: "城市徽记", icon: "/assets/button-icons-v2/flag.png" },
-  { key: "social", label: "同伴回声", icon: "/assets/button-icons-v2/echo.png" },
-  { key: "remix", label: "梗火花", icon: "/assets/button-icons-v2/spark.png" },
-  { key: "kick", label: "一脚破圈", icon: "/assets/button-icons-v2/kick.png" },
+  { key: "intro", label: "入场", icon: "/assets/button-icons-v2/intro.avif" },
+  { key: "story", label: "情感火种", icon: "/assets/button-icons-v2/fire.avif" },
+  { key: "symbols", label: "城市徽记", icon: "/assets/button-icons-v2/flag.avif" },
+  { key: "social", label: "同伴回声", icon: "/assets/button-icons-v2/echo.avif" },
+  { key: "remix", label: "梗火花", icon: "/assets/button-icons-v2/spark.avif" },
+  { key: "kick", label: "一脚破圈", icon: "/assets/button-icons-v2/kick.avif" },
 ];
 
 const MEMORY_FRAGMENTS = ["海风吹回的旧皮球", "第一次穿上的家乡球衣", "看台上传来的熟悉方言"];
 const MEMORY_ICONS: Record<string, string> = {
-  "海风吹回的旧皮球": "/assets/button-icons-v2/memory-ball.png",
-  "第一次穿上的家乡球衣": "/assets/button-icons-v2/memory-jersey.png",
-  "看台上传来的熟悉方言": "/assets/button-icons-v2/memory-stands.png",
+  "海风吹回的旧皮球": "/assets/button-icons-v2/memory-ball.avif",
+  "第一次穿上的家乡球衣": "/assets/button-icons-v2/memory-jersey.avif",
+  "看台上传来的熟悉方言": "/assets/button-icons-v2/memory-stands.avif",
 };
 const SYMBOLS = [
-  { id: "wave", icon: "/assets/button-icons-v2/wave.png", label: "海风纹样" },
-  { id: "tower", icon: "/assets/button-icons-v2/tower.png", label: "地标剪影" },
-  { id: "ball", icon: "/assets/button-icons-v2/ball.png", label: "足球符号" },
-  { id: "cheer", icon: "/assets/button-icons-v2/cheer.png", label: "助威短句" },
-  { id: "bridge", icon: "/assets/button-icons-v2/bridge.png", label: "山海连线" },
+  { id: "wave", icon: "/assets/button-icons-v2/wave.avif", label: "海风纹样" },
+  { id: "tower", icon: "/assets/button-icons-v2/tower.avif", label: "地标剪影" },
+  { id: "ball", icon: "/assets/button-icons-v2/ball.avif", label: "足球符号" },
+  { id: "cheer", icon: "/assets/button-icons-v2/cheer.avif", label: "助威短句" },
+  { id: "bridge", icon: "/assets/button-icons-v2/bridge.avif", label: "山海连线" },
 ];
 const PHRASES = ["海风起势，这脚向前！", "厝边，一起看闽超！", "这球有福气！", "家乡队，继续燃！"];
 const TONES = ["热血切帧", "可爱弹跳", "反差停格"];
 const STICKERS = [
-  { id: "ball", icon: "/assets/button-icons-v2/ball.png", label: "足球" },
-  { id: "spark", icon: "/assets/button-icons-v2/spark.png", label: "火花" },
-  { id: "wave", icon: "/assets/button-icons-v2/wave.png", label: "海风" },
-  { id: "flag", icon: "/assets/button-icons-v2/sticker-flag.png", label: "旗帜" },
+  { id: "ball", icon: "/assets/button-icons-v2/ball.avif", label: "足球" },
+  { id: "spark", icon: "/assets/button-icons-v2/spark.avif", label: "火花" },
+  { id: "wave", icon: "/assets/button-icons-v2/wave.avif", label: "海风" },
+  { id: "flag", icon: "/assets/button-icons-v2/sticker-flag.avif", label: "旗帜" },
 ];
 const RITUAL_ICONS = [
-  { id: "fire", icon: "/assets/button-icons-v2/fire.png", label: "情感火种" },
-  { id: "flag", icon: "/assets/button-icons-v2/flag.png", label: "城市徽记" },
-  { id: "echo", icon: "/assets/button-icons-v2/echo.png", label: "同伴回声" },
-  { id: "spark", icon: "/assets/button-icons-v2/spark.png", label: "梗火花" },
+  { id: "fire", icon: "/assets/button-icons-v2/fire.avif", label: "情感火种" },
+  { id: "flag", icon: "/assets/button-icons-v2/flag.avif", label: "城市徽记" },
+  { id: "echo", icon: "/assets/button-icons-v2/echo.avif", label: "同伴回声" },
+  { id: "spark", icon: "/assets/button-icons-v2/spark.avif", label: "梗火花" },
 ];
+
+const PRELOAD_ASSETS = Array.from(new Set([
+  ...STAGES.map((item) => item.icon),
+  ...Object.values(MEMORY_ICONS),
+  ...SYMBOLS.map((item) => item.icon),
+  ...STICKERS.map((item) => item.icon),
+  ...RITUAL_ICONS.map((item) => item.icon),
+  "/assets/stadium-bg.avif",
+  "/assets/guide.avif",
+  "/assets/guide-icon.png",
+  "/assets/cheer-squad.avif",
+  "/assets/audio/bgm-0714.m4a",
+  "/assets/audio/sfx-button.mp3",
+  "/assets/audio/sfx-city-correct.mp3",
+  "/assets/audio/sfx-cheer.m4a",
+  "/assets/audio/sfx-shutter.mp3",
+  "/assets/audio/sfx-kick.mp3",
+  "/assets/button-skins-v2/choice.avif",
+  "/assets/button-skins-v2/ghost-readable.avif",
+  "/assets/button-skins-v2/ghost.avif",
+  "/assets/button-skins-v2/memory.avif",
+  "/assets/button-skins-v2/primary.avif",
+  "/assets/button-skins-v2/secondary-readable.avif",
+  "/assets/button-skins-v2/secondary.avif",
+  "/assets/button-skins-v2/sensor.avif",
+  "/assets/button-skins-v2/sticker.avif",
+  "/assets/button-skins-v2/toggle.avif",
+  "/assets/button-icons-v2/assist.avif",
+  "/assets/button-icons-v2/avatar-group.avif",
+  "/assets/button-icons-v2/camera.avif",
+  "/assets/button-icons-v2/capture.avif",
+  "/assets/button-icons-v2/clap.avif",
+  "/assets/button-icons-v2/echo-next.avif",
+  "/assets/button-icons-v2/fire-next.avif",
+  "/assets/button-icons-v2/flag-raise.avif",
+  "/assets/button-icons-v2/goal-sensor.avif",
+  "/assets/button-icons-v2/heart-memory.avif",
+  "/assets/button-icons-v2/info-card.avif",
+  "/assets/button-icons-v2/microphone.avif",
+  "/assets/button-icons-v2/pass-next.avif",
+  "/assets/button-icons-v2/remix.avif",
+  "/assets/button-icons-v2/ritual-ball.avif",
+  "/assets/button-icons-v2/save.avif",
+  "/assets/button-icons-v2/sensor.avif",
+  "/assets/button-icons-v2/share.avif",
+  "/assets/button-icons-v2/start-pass.avif",
+  "/assets/button-icons-v2/story-boot.avif",
+  "/assets/button-icons-v2/swipe-kick.avif",
+  "/assets/button-icons-v2/undo.avif",
+]));
 
 function PixelIcon({ src, alt = "", className = "" }: { src: string; alt?: string; className?: string }) {
   return <img className={`pixel-icon ${className}`} src={src} alt={alt} draggable={false} />;
@@ -66,6 +116,32 @@ function loadImage(src: string) {
     image.onerror = reject;
     image.src = src;
   });
+}
+
+async function preloadAsset(src: string) {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(src, { cache: "force-cache" });
+      if (!response.ok) throw new Error(`Unable to preload ${src}: ${response.status}`);
+      const blob = await response.blob();
+
+      if (blob.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(blob);
+        try {
+          await loadImage(objectUrl);
+        } finally {
+          URL.revokeObjectURL(objectUrl);
+        }
+      }
+      return;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError;
 }
 
 function drawCover(ctx: CanvasRenderingContext2D, image: CanvasImageSource, sourceWidth: number, sourceHeight: number, x: number, y: number, width: number, height: number) {
@@ -119,6 +195,11 @@ export default function Home() {
   const [qrDataUrl, setQrDataUrl] = useState("");
   const [shareStatus, setShareStatus] = useState("把这份声浪交给下一位球迷");
   const [stageScale, setStageScale] = useState(1);
+  const [preloadProgress, setPreloadProgress] = useState(0);
+  const [preloadReady, setPreloadReady] = useState(false);
+  const [preloadFailures, setPreloadFailures] = useState(0);
+  const [preloadAttempt, setPreloadAttempt] = useState(0);
+  const [experienceStarted, setExperienceStarted] = useState(false);
 
   const holdTimer = useRef<number | null>(null);
   const heartHoldStartedAt = useRef(0);
@@ -143,6 +224,7 @@ export default function Home() {
   const stageRef = useRef<Stage>("intro");
   const stageViewportRef = useRef<HTMLDivElement>(null);
   const stageContentRef = useRef<HTMLDivElement>(null);
+  const preloadRunRef = useRef(0);
 
   const currentIndex = stage === "result" ? STAGES.length : STAGES.findIndex((item) => item.key === stage);
   const symbolState = selectedSymbols.length < 2 ? "too-light" : selectedSymbols.length > 3 ? "too-crowded" : "just-right";
@@ -172,6 +254,38 @@ export default function Home() {
     if (bgm) {
       bgm.volume = 0.24;
       void bgm.play().catch(() => undefined);
+    }
+  };
+
+  const enterExperience = async () => {
+    if (!preloadReady) return;
+
+    const root = document.documentElement as HTMLElement & {
+      webkitRequestFullscreen?: () => Promise<void> | void;
+    };
+    let fullscreenRequest: Promise<void> | void;
+
+    try {
+      if (!document.fullscreenElement && root.requestFullscreen) {
+        fullscreenRequest = root.requestFullscreen({ navigationUI: "hide" });
+      } else if (!document.fullscreenElement && root.webkitRequestFullscreen) {
+        fullscreenRequest = root.webkitRequestFullscreen();
+      }
+    } catch {
+      fullscreenRequest = undefined;
+    }
+
+    setExperienceStarted(true);
+    const bgm = bgmRef.current;
+    if (bgm && soundEnabledRef.current) {
+      bgm.volume = 0.24;
+      void bgm.play().catch(() => undefined);
+    }
+
+    try {
+      await fullscreenRequest;
+    } catch {
+      // The fixed single-screen layout remains usable when native fullscreen is unavailable.
     }
   };
 
@@ -213,7 +327,7 @@ export default function Home() {
           kicker: "MISS · 时机偏了",
           title: "这脚偏出啦",
           copy: "指针没有停在金色区域，球还没进。等指针进入“最佳时机”，再踢一次。",
-          icon: "/assets/button-icons-v2/swipe-kick.png",
+          icon: "/assets/button-icons-v2/swipe-kick.avif",
           actionLabel: "回到球前 · 再踢一遍",
           kind: "kick-retry",
         });
@@ -236,6 +350,78 @@ export default function Home() {
   }, [stage]);
 
   useEffect(() => {
+    const run = preloadRunRef.current + 1;
+    preloadRunRef.current = run;
+    let completed = 0;
+    let failures = 0;
+    const total = PRELOAD_ASSETS.length + 1;
+
+    setPreloadProgress(0);
+    setPreloadFailures(0);
+    setPreloadReady(false);
+
+    const markComplete = () => {
+      completed += 1;
+      if (preloadRunRef.current === run) {
+        setPreloadProgress(Math.round((completed / total) * 100));
+      }
+    };
+
+    const runPreload = async () => {
+      await Promise.all(PRELOAD_ASSETS.map(async (src) => {
+        try {
+          await preloadAsset(src);
+        } catch {
+          failures += 1;
+        } finally {
+          markComplete();
+        }
+      }));
+
+      if (document.fonts) {
+        await Promise.race([
+          document.fonts.ready,
+          new Promise<void>((resolve) => window.setTimeout(resolve, 4000)),
+        ]);
+      }
+      markComplete();
+
+      await new Promise<void>((resolve) => window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => resolve());
+      }));
+
+      if (preloadRunRef.current !== run) return;
+      setPreloadFailures(failures);
+      setPreloadReady(failures === 0);
+      setPreloadProgress(100);
+    };
+
+    void runPreload();
+    return () => {
+      if (preloadRunRef.current === run) preloadRunRef.current += 1;
+    };
+  }, [preloadAttempt]);
+
+  useEffect(() => {
+    const stopGesture = (event: Event) => event.preventDefault();
+    const stopTouchMove = (event: TouchEvent) => event.preventDefault();
+
+    document.addEventListener("dblclick", stopGesture, { passive: false });
+    document.addEventListener("gesturestart", stopGesture, { passive: false });
+    document.addEventListener("gesturechange", stopGesture, { passive: false });
+    document.addEventListener("gestureend", stopGesture, { passive: false });
+    document.addEventListener("touchmove", stopTouchMove, { passive: false });
+
+    return () => {
+      document.removeEventListener("dblclick", stopGesture);
+      document.removeEventListener("gesturestart", stopGesture);
+      document.removeEventListener("gesturechange", stopGesture);
+      document.removeEventListener("gestureend", stopGesture);
+      document.removeEventListener("touchmove", stopTouchMove);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!feedbackDialog) return;
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") dismissFeedback();
@@ -245,6 +431,7 @@ export default function Home() {
   }, [feedbackDialog]);
 
   useEffect(() => {
+    if (!experienceStarted) return;
     const startBgm = () => {
       const bgm = bgmRef.current;
       if (bgm && bgm.paused && soundEnabledRef.current) {
@@ -260,7 +447,7 @@ export default function Home() {
       window.removeEventListener("pointerdown", startBgm);
       window.removeEventListener("keydown", startBgm);
     };
-  }, []);
+  }, [experienceStarted]);
 
   useEffect(() => {
     const handleButtonSound = (event: MouseEvent) => {
@@ -367,7 +554,7 @@ export default function Home() {
         kicker: "WAIT · 记忆未齐",
         title: "记忆还没找齐",
         copy: `先点亮三段记忆。现在已经找回 ${memories.length} / ${MEMORY_FRAGMENTS.length} 段。`,
-        icon: "/assets/button-icons-v2/memory-on.png",
+        icon: "/assets/button-icons-v2/memory-on.avif",
       });
       return;
     }
@@ -392,7 +579,7 @@ export default function Home() {
         kicker: "HOLD · 松手太早",
         title: "这里需要长按",
         copy: "按住心跳按钮不要松手，持续约 1.2 秒，等情感火种完全点亮。",
-        icon: "/assets/button-icons-v2/heart-memory.png",
+        icon: "/assets/button-icons-v2/heart-memory.avif",
         actionLabel: "明白了，再长按一次",
       });
     }
@@ -404,7 +591,7 @@ export default function Home() {
         kicker: "FOUND · 已经收好",
         title: "这段记忆亮过了",
         copy: "它已经放进故事里。继续点亮还没有发光的记忆碎片。",
-        icon: "/assets/button-icons-v2/memory-on.png",
+        icon: "/assets/button-icons-v2/memory-on.avif",
       });
       return;
     }
@@ -417,7 +604,7 @@ export default function Home() {
       kicker: "TRY AGAIN · 还差情感",
       title: "赛况不是这次的答案",
       copy: "它能告诉大家发生了什么，却还不能让人记住为什么重要。试试右边的人物故事。",
-      icon: "/assets/button-icons-v2/info-card.png",
+      icon: "/assets/button-icons-v2/info-card.avif",
       actionLabel: "回去选择人物故事",
     });
   };
@@ -433,7 +620,7 @@ export default function Home() {
         kicker: "WAIT · 故事未选择",
         title: "先找到值得记住的故事",
         copy: "选择“旧球鞋里的海风”，再把其中三段记忆找回来。",
-        icon: "/assets/button-icons-v2/story-boot.png",
+        icon: "/assets/button-icons-v2/story-boot.avif",
       });
       return;
     }
@@ -442,7 +629,7 @@ export default function Home() {
         kicker: "WAIT · 记忆未齐",
         title: "故事还没有拼完整",
         copy: `还差 ${MEMORY_FRAGMENTS.length - memories.length} 段记忆。把三张记忆卡全部点亮后再继续。`,
-        icon: "/assets/button-icons-v2/memory-on.png",
+        icon: "/assets/button-icons-v2/memory-on.avif",
       });
       return;
     }
@@ -450,7 +637,7 @@ export default function Home() {
       kicker: "HOLD · 火种未亮",
       title: "还要守住这段记忆",
       copy: "按住心跳按钮约 1.2 秒，等情感火种真正点亮后再继续。",
-      icon: "/assets/button-icons-v2/heart-memory.png",
+      icon: "/assets/button-icons-v2/heart-memory.avif",
     });
   };
 
@@ -465,7 +652,7 @@ export default function Home() {
         kicker: "TOO MUCH · 素材太挤",
         title: "旗帜快装不下了",
         copy: "城市符号最多保留三个。再点一次不那么重要的素材，把主角让出来。",
-        icon: "/assets/button-icons-v2/flag.png",
+        icon: "/assets/button-icons-v2/flag.avif",
         actionLabel: "回去删掉一个素材",
       });
     }
@@ -481,13 +668,13 @@ export default function Home() {
       kicker: "TOO LIGHT · 还认不出",
       title: "城市味还不够",
       copy: "至少选择两个城市符号，再举起这面旗帜。",
-      icon: "/assets/button-icons-v2/flag.png",
+      icon: "/assets/button-icons-v2/flag.avif",
       actionLabel: "继续选择素材",
     } : {
       kicker: "TOO MUCH · 素材太挤",
       title: "先给旗帜留口气",
       copy: "最多保留三个城市符号。删掉一个素材，让画面重新清楚起来。",
-      icon: "/assets/button-icons-v2/flag.png",
+      icon: "/assets/button-icons-v2/flag.avif",
       actionLabel: "回去删掉一个素材",
     });
   };
@@ -499,7 +686,7 @@ export default function Home() {
         kicker: "READY · 已经就位",
         title: "这一边已经亮了",
         copy: side === "left" ? "发起人已经站好。现在去邀请右侧同伴一起就位。" : "同伴已经站好。两边都亮起后就可以开始助威。",
-        icon: side === "left" ? "/assets/button-icons-v2/cheer.png" : "/assets/button-icons-v2/echo.png",
+        icon: side === "left" ? "/assets/button-icons-v2/cheer.avif" : "/assets/button-icons-v2/echo.avif",
       });
       return;
     }
@@ -514,7 +701,7 @@ export default function Home() {
         kicker: "WAIT · 站位未齐",
         title: "先让两边都站好",
         copy: "点亮“我的站位”和“同伴站位”，两个人准备好后再拍手助威。",
-        icon: "/assets/button-icons-v2/clap.png",
+        icon: "/assets/button-icons-v2/clap.avif",
       });
       return;
     }
@@ -554,7 +741,7 @@ export default function Home() {
         kicker: "MIC · 没有听见",
         title: "麦克风没有开启",
         copy: "可以允许麦克风后再试，也可以直接使用“拍手助威”完成这一幕。",
-        icon: "/assets/button-icons-v2/microphone.png",
+        icon: "/assets/button-icons-v2/microphone.avif",
         actionLabel: "改用拍手助威",
       });
     }
@@ -566,7 +753,7 @@ export default function Home() {
         kicker: "WAIT · 站位未齐",
         title: "现在还不能开麦",
         copy: "先点亮“我的站位”和“同伴站位”，再让两边一起把声音接起来。",
-        icon: "/assets/button-icons-v2/microphone.png",
+        icon: "/assets/button-icons-v2/microphone.avif",
       });
       return;
     }
@@ -586,7 +773,7 @@ export default function Home() {
         kicker: "CAMERA · 镜头未开",
         title: "没有取得镜头画面",
         copy: "可以重新允许镜头，也可以选择“不用镜头，使用像素合影”。",
-        icon: "/assets/button-icons-v2/camera.png",
+        icon: "/assets/button-icons-v2/camera.avif",
         actionLabel: "改用像素合影",
       });
     }
@@ -599,7 +786,7 @@ export default function Home() {
         kicker: "WAIT · 画面未就绪",
         title: "镜头还在准备",
         copy: "等画面出现后再定格这一刻，或者返回使用像素合影。",
-        icon: "/assets/button-icons-v2/capture.png",
+        icon: "/assets/button-icons-v2/capture.avif",
       });
       return;
     }
@@ -616,7 +803,7 @@ export default function Home() {
     ctx.restore();
     ctx.fillStyle = "rgba(7, 34, 34, .22)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    const squad = await loadImage("/assets/cheer-squad.png");
+    const squad = await loadImage("/assets/cheer-squad.avif");
     ctx.drawImage(squad, 55, 465, 790, 525);
     ctx.strokeStyle = "#f6c94c";
     ctx.lineWidth = 18;
@@ -629,7 +816,7 @@ export default function Home() {
   const useAvatarPhoto = () => {
     stopCamera();
     playClip(shutterSfxRef.current, 0.78);
-    setCapturedPhoto("/assets/cheer-squad.png");
+    setCapturedPhoto("/assets/cheer-squad.avif");
     setPhotoStatus("已使用像素拉拉队合影，不会保存真人画面");
   };
 
@@ -645,12 +832,12 @@ export default function Home() {
         kicker: "WAIT · 站位未齐",
         title: "同伴回声还没接上",
         copy: "先点亮左右两处站位，再使用麦克风或拍手完成助威。",
-        icon: "/assets/button-icons-v2/echo.png",
+        icon: "/assets/button-icons-v2/echo.avif",
       } : {
         kicker: "WAIT · 声浪未满",
         title: "再把回声喊响一点",
         copy: "继续拍手，或打开麦克风助威。声浪达到三格后才会进入合影。",
-        icon: "/assets/button-icons-v2/clap.png",
+        icon: "/assets/button-icons-v2/clap.avif",
       });
       return;
     }
@@ -658,7 +845,7 @@ export default function Home() {
       kicker: "WAIT · 合影未完成",
       title: "还少一张同伴合影",
       copy: "打开镜头定格这一刻，或直接使用像素合影，再带着回声去二创。",
-      icon: "/assets/button-icons-v2/avatar-group.png",
+      icon: "/assets/button-icons-v2/avatar-group.avif",
       actionLabel: "回去完成合影",
     });
   };
@@ -682,7 +869,7 @@ export default function Home() {
       kicker: "WAIT · 二创未生成",
       title: "梗火花还没点亮",
       copy: "先选择短句、节奏和贴纸，再点击“重新开球 · 完成再编码”。",
-      icon: "/assets/button-icons-v2/remix.png",
+      icon: "/assets/button-icons-v2/remix.avif",
       actionLabel: "回去完成二创",
     });
   };
@@ -694,7 +881,7 @@ export default function Home() {
         kicker: "SENSOR · 当前不可用",
         title: "这台设备没有动作感应",
         copy: "不用连接实体装置，直接使用控制台里的模拟按钮也能继续体验。",
-        icon: "/assets/button-icons-v2/sensor.png",
+        icon: "/assets/button-icons-v2/sensor.avif",
         actionLabel: "使用点按模拟",
       });
       return;
@@ -709,7 +896,7 @@ export default function Home() {
             kicker: "SENSOR · 未获授权",
             title: "手机感应没有开启",
             copy: "可以重新授权，也可以直接使用控制台里的模拟按钮继续体验。",
-            icon: "/assets/button-icons-v2/sensor.png",
+            icon: "/assets/button-icons-v2/sensor.avif",
             actionLabel: "使用点按模拟",
           });
           return;
@@ -738,7 +925,7 @@ export default function Home() {
         kicker: "SENSOR · 开启失败",
         title: "暂时读不到手机动作",
         copy: "不用外接设备，直接使用控制台里的模拟按钮即可继续。",
-        icon: "/assets/button-icons-v2/sensor.png",
+        icon: "/assets/button-icons-v2/sensor.avif",
         actionLabel: "使用点按模拟",
       });
     }
@@ -750,7 +937,7 @@ export default function Home() {
         kicker: "NOT YET · 当前幕不可用",
         title: "现在还用不上站位",
         copy: "走到“一个人知道，不如一起喊”这一幕，再用手机感应点亮两处站位。",
-        icon: "/assets/button-icons-v2/sensor.png",
+        icon: "/assets/button-icons-v2/sensor.avif",
       });
       return;
     }
@@ -767,7 +954,7 @@ export default function Home() {
         kicker: "NOT YET · 当前幕不可用",
         title: "现在晃动还不会生效",
         copy: "在同伴助威幕晃动可模拟拍手，在射门幕晃动可触发踢球。",
-        icon: "/assets/button-icons-v2/goal-sensor.png",
+        icon: "/assets/button-icons-v2/goal-sensor.avif",
       });
       return;
     }
@@ -776,7 +963,7 @@ export default function Home() {
         kicker: "WAIT · 站位未齐",
         title: "先让两边都站好",
         copy: "点亮两处站位后，再晃动手机完成拍手助威。",
-        icon: "/assets/button-icons-v2/clap.png",
+        icon: "/assets/button-icons-v2/clap.avif",
       });
       return;
     }
@@ -789,7 +976,7 @@ export default function Home() {
     canvas.height = 1500;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const background = await loadImage("/assets/stadium-bg.png");
+    const background = await loadImage("/assets/stadium-bg.avif");
     drawCover(ctx, background, background.width, background.height, 0, 0, canvas.width, canvas.height);
     const shade = ctx.createLinearGradient(0, 0, 0, canvas.height);
     shade.addColorStop(0, "rgba(4,24,37,.12)");
@@ -803,7 +990,7 @@ export default function Home() {
     ctx.font = '900 88px "PingFang SC", "Microsoft YaHei", sans-serif';
     ctx.fillText("我把闽超", 68, 205);
     ctx.fillText("踢出圈了！", 68, 315);
-    const visual = await loadImage(capturedPhoto || "/assets/cheer-squad.png");
+    const visual = await loadImage(capturedPhoto || "/assets/cheer-squad.avif");
     const vw = visual.width;
     const vh = visual.height;
     drawCover(ctx, visual, vw, vh, 80, 430, 1040, 650);
@@ -860,7 +1047,7 @@ export default function Home() {
         kicker: "WAIT · 像素卡显影中",
         title: "分享卡还没准备好",
         copy: "再等一小会儿，像素卡和二维码完成显影后就可以发布。",
-        icon: "/assets/button-icons-v2/share.png",
+        icon: "/assets/button-icons-v2/share.avif",
       });
       return;
     }
@@ -895,11 +1082,12 @@ export default function Home() {
   };
 
   return (
-    <main className={`game-shell stage-${stage}`}>
-      <audio ref={bgmRef} src="/assets/audio/bgm-0714.mp3" preload="auto" loop aria-hidden="true" />
+    <>
+    <main className={`game-shell stage-${stage}`} aria-hidden={!experienceStarted} inert={!experienceStarted ? true : undefined}>
+      <audio ref={bgmRef} src="/assets/audio/bgm-0714.m4a" preload="auto" loop aria-hidden="true" />
       <audio ref={buttonSfxRef} src="/assets/audio/sfx-button.mp3" preload="auto" aria-hidden="true" />
       <audio ref={cityCorrectSfxRef} src="/assets/audio/sfx-city-correct.mp3" preload="auto" aria-hidden="true" />
-      <audio ref={cheerSfxRef} src="/assets/audio/sfx-cheer.mp3" preload="auto" aria-hidden="true" />
+      <audio ref={cheerSfxRef} src="/assets/audio/sfx-cheer.m4a" preload="auto" aria-hidden="true" />
       <audio ref={shutterSfxRef} src="/assets/audio/sfx-shutter.mp3" preload="auto" aria-hidden="true" />
       <audio ref={kickSfxRef} src="/assets/audio/sfx-kick.mp3" preload="auto" aria-hidden="true" />
       <div className="stadium-backdrop" aria-hidden="true" />
@@ -908,7 +1096,7 @@ export default function Home() {
           <span className="brand-chip">PIXEL RITUAL · 互动仪式链</span>
           <strong>闽超声浪接力</strong>
         </div>
-        <button className={`sound-toggle ${soundEnabled ? "" : "muted"}`.trim()} onClick={toggleSound} aria-pressed={soundEnabled} aria-label={soundEnabled ? "关闭声音" : "开启声音"}><PixelIcon src="/assets/button-icons-v2/echo.png" alt="" className="button-icon" /><span>{soundEnabled ? "声音开" : "声音关"}</span></button>
+        <button className={`sound-toggle ${soundEnabled ? "" : "muted"}`.trim()} onClick={toggleSound} aria-pressed={soundEnabled} aria-label={soundEnabled ? "关闭声音" : "开启声音"}><PixelIcon src="/assets/button-icons-v2/echo.avif" alt="" className="button-icon" /><span>{soundEnabled ? "声音开" : "声音关"}</span></button>
       </header>
 
       <nav className="ritual-track" aria-label="互动剧情进度">
@@ -922,11 +1110,11 @@ export default function Home() {
       {sensorPanel && (
         <aside className="sensor-panel" aria-label="手机感应控制台">
           <div><strong>手机感应</strong><small>{sensorStatus}</small></div>
-          <PixelButton onClick={() => void enablePhoneSensor()} icon="/assets/button-icons-v2/sensor.png" tone="secondary">开启手机感应</PixelButton>
+          <PixelButton onClick={() => void enablePhoneSensor()} icon="/assets/button-icons-v2/sensor.avif" tone="secondary">开启手机感应</PixelButton>
           <div className="sensor-sim-row">
-            <button onClick={() => simulatePad("left")}><PixelIcon src="/assets/button-icons-v2/cheer.png" alt="" className="button-icon" />点亮我的站位</button>
-            <button onClick={() => simulatePad("right")}><PixelIcon src="/assets/button-icons-v2/echo.png" alt="" className="button-icon" />点亮同伴站位</button>
-            <button onClick={simulateMotion}><PixelIcon src="/assets/button-icons-v2/goal-sensor.png" alt="" className="button-icon" />晃动手机</button>
+            <button onClick={() => simulatePad("left")}><PixelIcon src="/assets/button-icons-v2/cheer.avif" alt="" className="button-icon" />点亮我的站位</button>
+            <button onClick={() => simulatePad("right")}><PixelIcon src="/assets/button-icons-v2/echo.avif" alt="" className="button-icon" />点亮同伴站位</button>
+            <button onClick={simulateMotion}><PixelIcon src="/assets/button-icons-v2/goal-sensor.avif" alt="" className="button-icon" />晃动手机</button>
           </div>
           <p>这里的传感器指手机自带动作感应：倾斜点亮站位，晃动完成拍手助威，射门页晃动可判定进球。不需要外接设备。</p>
         </aside>
@@ -942,7 +1130,7 @@ export default function Home() {
               <span className="eyebrow">STAGE 0 · 序幕</span>
               <h1>闽超声浪接力<br /><em>一脚踢出屏幕</em></h1>
               <p>球场里已经沸腾，屏幕外却还罩着“温差雾”。找回四件仪式物，把现场声浪交给下一个人。</p>
-              <PixelButton onClick={() => setStage("story")} icon="/assets/button-icons-v2/start-pass.png" testId="start-game">接球，开始破圈</PixelButton>
+              <PixelButton onClick={() => setStage("story")} icon="/assets/button-icons-v2/start-pass.avif" testId="start-game">接球，开始破圈</PixelButton>
               <div className="no-data-note">NO RANK · NO CHART · 只有真实互动</div>
             </div>
             <div className="guide-scene">
@@ -951,7 +1139,7 @@ export default function Home() {
                   <PixelIcon src={item.icon} alt={item.label} />
                 </div>
               ))}
-              <img src="/assets/guide.png" alt="原创像素引导员小闽火，手托发光足球" />
+              <img src="/assets/guide.avif" alt="原创像素引导员小闽火，手托发光足球" />
               <div className="speech-bubble">“闽超缺的不是观众，<br />是把热爱传给下一位的那一脚。”</div>
             </div>
           </div>
@@ -961,8 +1149,8 @@ export default function Home() {
           <div className="act-layout">
             <div className="act-heading"><span>ACT 1 · H1</span><h2>把比分变成家乡故事</h2><p>纯资讯让人知道，情感叙事让人愿意继续讲。</p></div>
             <div className="story-doors">
-              <button className={`story-door info ${storyMode === "info" ? "selected" : ""}`} onClick={chooseInfoStory}><PixelIcon src="/assets/button-icons-v2/info-card.png" alt="" className="choice-icon" /><small>赛事资讯</small><strong>今晚有比赛</strong><span>知道发生了什么</span></button>
-              <button className={`story-door emotion ${storyMode === "emotion" ? "selected" : ""}`} onClick={() => setStoryMode("emotion")}><PixelIcon src="/assets/button-icons-v2/story-boot.png" alt="" className="choice-icon" /><small>人物叙事</small><strong>旧球鞋里的海风</strong><span>知道为什么值得记住</span></button>
+              <button className={`story-door info ${storyMode === "info" ? "selected" : ""}`} onClick={chooseInfoStory}><PixelIcon src="/assets/button-icons-v2/info-card.avif" alt="" className="choice-icon" /><small>赛事资讯</small><strong>今晚有比赛</strong><span>知道发生了什么</span></button>
+              <button className={`story-door emotion ${storyMode === "emotion" ? "selected" : ""}`} onClick={() => setStoryMode("emotion")}><PixelIcon src="/assets/button-icons-v2/story-boot.avif" alt="" className="choice-icon" /><small>人物叙事</small><strong>旧球鞋里的海风</strong><span>知道为什么值得记住</span></button>
             </div>
             {storyMode === "info" && <div className="soft-message">赛况卡亮了一下，又安静了。小闽火：“信息已经看见了，再听一句他的心里话。”</div>}
             {storyMode === "emotion" && (
@@ -970,7 +1158,7 @@ export default function Home() {
                 <div className="fragment-row">
                   {MEMORY_FRAGMENTS.map((fragment) => (
                     <button className={memories.includes(fragment) ? "restored" : ""} key={fragment} onClick={() => toggleMemory(fragment)}>
-                      <PixelIcon src={memories.includes(fragment) ? "/assets/button-icons-v2/memory-on.png" : MEMORY_ICONS[fragment]} alt="" />
+                      <PixelIcon src={memories.includes(fragment) ? "/assets/button-icons-v2/memory-on.avif" : MEMORY_ICONS[fragment]} alt="" />
                       <span>{fragment}</span>
                     </button>
                   ))}
@@ -986,7 +1174,7 @@ export default function Home() {
                   data-blocked={memories.length !== MEMORY_FRAGMENTS.length || undefined}
                 >
                   <span className="heart-visual" aria-hidden="true">
-                    <PixelIcon src="/assets/button-icons-v2/heart-memory.png" alt="" className="heart-icon" />
+                    <PixelIcon src="/assets/button-icons-v2/heart-memory.avif" alt="" className="heart-icon" />
                     <i className="heart-pulse" />
                     <i className="heart-pulse delay" />
                   </span>
@@ -994,7 +1182,7 @@ export default function Home() {
                 </button>
               </div>
             )}
-            <div className="act-actions"><PixelButton onClick={continueFromStory} icon="/assets/button-icons-v2/fire-next.png" blocked={!heartReady}>带着情感火种继续</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={continueFromStory} icon="/assets/button-icons-v2/fire-next.avif" blocked={!heartReady}>带着情感火种继续</PixelButton></div>
           </div>
         )}
 
@@ -1026,27 +1214,27 @@ export default function Home() {
               </div>
             </div>
             <div className={`symbol-message ${symbolState}`}>{symbolMessage}</div>
-            <div className="act-actions"><PixelButton onClick={continueFromSymbols} icon="/assets/button-icons-v2/flag-raise.png" blocked={symbolState !== "just-right"}>举起城市徽记</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={continueFromSymbols} icon="/assets/button-icons-v2/flag-raise.avif" blocked={symbolState !== "just-right"}>举起城市徽记</PixelButton></div>
           </div>
         )}
 
         {stage === "social" && (
           <div className="act-layout social-act">
             <div className="act-heading"><span>ACT 3 · H3</span><h2>一个人知道，不如一起喊</h2><p>共同站位、轮流回应，再和拉拉队完成一张真正能带走的合影。</p></div>
-            <button className="inline-sensor-toggle" onClick={() => setSensorPanel((value) => !value)} aria-expanded={sensorPanel}><PixelIcon src="/assets/button-icons-v2/sensor.png" alt="" className="button-icon" />手机感应</button>
+            <button className="inline-sensor-toggle" onClick={() => setSensorPanel((value) => !value)} aria-expanded={sensorPanel}><PixelIcon src="/assets/button-icons-v2/sensor.avif" alt="" className="button-icon" />手机感应</button>
             {!chantComplete ? (
               <>
                 <div className="footpads">
                   <button className={leftPad ? "active" : ""} onClick={() => activatePad("left")}>
-                    <PixelIcon src="/assets/button-icons-v2/cheer.png" alt="" className="foot-icon" />
+                    <PixelIcon src="/assets/button-icons-v2/cheer.avif" alt="" className="foot-icon" />
                     <b>我的站位</b>
                     <span>{leftPad ? "发起人已就位" : "点亮站位"}</span>
                   </button>
                   <div className={`pass-line ${leftPad && rightPad ? "linked" : ""}`}>
-                    <PixelIcon src="/assets/button-icons-v2/ball.png" alt="足球" />
+                    <PixelIcon src="/assets/button-icons-v2/ball.avif" alt="足球" />
                   </div>
                   <button className={rightPad ? "active" : ""} onClick={() => activatePad("right")}>
-                    <PixelIcon src="/assets/button-icons-v2/echo.png" alt="" className="foot-icon" />
+                    <PixelIcon src="/assets/button-icons-v2/echo.avif" alt="" className="foot-icon" />
                     <b>同伴站位</b>
                     <span>{rightPad ? "应援同伴已就位" : "邀请同伴"}</span>
                   </button>
@@ -1055,24 +1243,24 @@ export default function Home() {
                   <div className={`sound-ripples hits-${Math.min(chantHits, 3)}`}><i /><i /><i /></div>
                   {clapPulse > 0 && (
                     <div className="clap-burst" key={`clap-burst-${clapPulse}`} aria-hidden="true">
-                      <PixelIcon src="/assets/button-icons-v2/clap.png" alt="" />
-                      <PixelIcon src="/assets/button-icons-v2/clap.png" alt="" />
+                      <PixelIcon src="/assets/button-icons-v2/clap.avif" alt="" />
+                      <PixelIcon src="/assets/button-icons-v2/clap.avif" alt="" />
                     </div>
                   )}
                   <strong>{leftPad && rightPad ? micStatus : "先让两处站位都亮起来"}</strong>
                   <div className="chant-buttons">
-                    <PixelButton onClick={startMicrophoneWithGuard} icon="/assets/button-icons-v2/microphone.png" blocked={!leftPad || !rightPad} tone="secondary">打开麦克风助威</PixelButton>
-                    <PixelButton key={`clap-button-${clapPulse}`} onClick={tapCheer} icon="/assets/button-icons-v2/clap.png" blocked={!leftPad || !rightPad} tone="ghost" className={clapPulse > 0 ? "clap-button clapping" : "clap-button"}>拍手助威</PixelButton>
+                    <PixelButton onClick={startMicrophoneWithGuard} icon="/assets/button-icons-v2/microphone.avif" blocked={!leftPad || !rightPad} tone="secondary">打开麦克风助威</PixelButton>
+                    <PixelButton key={`clap-button-${clapPulse}`} onClick={tapCheer} icon="/assets/button-icons-v2/clap.avif" blocked={!leftPad || !rightPad} tone="ghost" className={clapPulse > 0 ? "clap-button clapping" : "clap-button"}>拍手助威</PixelButton>
                   </div>
                 </div>
               </>
             ) : (
               <div className="photo-studio">
-                <div className="camera-frame">{cameraOn ? <video ref={videoRef} playsInline muted /> : capturedPhoto ? <img src={capturedPhoto} alt="用户选择的像素拉拉队合影" /> : <div className="avatar-stage"><img src="/assets/cheer-squad.png" alt="原创像素拉拉队做出挥旗、举手和比心动作" /></div>}<div className="camera-overlay"><span>准备——一起把海风喊起来！</span></div></div>
-                <div className="photo-controls"><p>{photoStatus}</p>{cameraOn ? <PixelButton onClick={() => void capturePhoto()} icon="/assets/button-icons-v2/capture.png">定格这一刻</PixelButton> : <><PixelButton onClick={() => void openCamera()} icon="/assets/button-icons-v2/camera.png" tone="secondary">同意并打开镜头</PixelButton><PixelButton onClick={useAvatarPhoto} icon="/assets/button-icons-v2/avatar-group.png" tone="ghost">不用镜头，使用像素合影</PixelButton></>}</div>
+                <div className="camera-frame">{cameraOn ? <video ref={videoRef} playsInline muted /> : capturedPhoto ? <img src={capturedPhoto} alt="用户选择的像素拉拉队合影" /> : <div className="avatar-stage"><img src="/assets/cheer-squad.avif" alt="原创像素拉拉队做出挥旗、举手和比心动作" /></div>}<div className="camera-overlay"><span>准备——一起把海风喊起来！</span></div></div>
+                <div className="photo-controls"><p>{photoStatus}</p>{cameraOn ? <PixelButton onClick={() => void capturePhoto()} icon="/assets/button-icons-v2/capture.avif">定格这一刻</PixelButton> : <><PixelButton onClick={() => void openCamera()} icon="/assets/button-icons-v2/camera.avif" tone="secondary">同意并打开镜头</PixelButton><PixelButton onClick={useAvatarPhoto} icon="/assets/button-icons-v2/avatar-group.avif" tone="ghost">不用镜头，使用像素合影</PixelButton></>}</div>
               </div>
             )}
-            <div className="act-actions"><PixelButton onClick={continueFromSocial} icon="/assets/button-icons-v2/echo-next.png" blocked={!capturedPhoto}>带着同伴回声去二创</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={continueFromSocial} icon="/assets/button-icons-v2/echo-next.avif" blocked={!capturedPhoto}>带着同伴回声去二创</PixelButton></div>
           </div>
         )}
 
@@ -1099,10 +1287,10 @@ export default function Home() {
                     </button>
                   ))}
                 </fieldset>
-                <PixelButton onClick={makeRemix} icon="/assets/button-icons-v2/remix.png" disabled={remixing}>{remixing ? "素材正在重新排布…" : "重新开球 · 完成再编码"}</PixelButton>
+                <PixelButton onClick={makeRemix} icon="/assets/button-icons-v2/remix.avif" disabled={remixing}>{remixing ? "素材正在重新排布…" : "重新开球 · 完成再编码"}</PixelButton>
               </div>
               <div className={`remix-preview ${remixing ? "remixing" : ""} ${remixReady ? "ready" : ""}`}>
-                <img src={capturedPhoto || "/assets/cheer-squad.png"} alt="闽超像素二创预览" />
+                <img src={capturedPhoto || "/assets/cheer-squad.avif"} alt="闽超像素二创预览" />
                 <div className="meme-caption">{phrase}</div>
                 <div className="meme-sticker">
                   <PixelIcon src={STICKERS.find((item) => item.id === sticker)?.icon ?? STICKERS[0].icon} alt="" />
@@ -1111,14 +1299,14 @@ export default function Home() {
               </div>
             </div>
             {remixReady && <div className="soft-message success">梗火花已点亮：这已经不是原素材，而是你的闽超表达。</div>}
-            <div className="act-actions"><PixelButton onClick={continueFromRemix} icon="/assets/button-icons-v2/ritual-ball.png" blocked={!remixReady}>把四件仪式物注入足球</PixelButton></div>
+            <div className="act-actions"><PixelButton onClick={continueFromRemix} icon="/assets/button-icons-v2/ritual-ball.avif" blocked={!remixReady}>把四件仪式物注入足球</PixelButton></div>
           </div>
         )}
 
         {stage === "kick" && (
           <div className="act-layout kick-act">
             <div className="act-heading"><span>FINAL · 闭环</span><h2>一脚破圈</h2><p>故事、符号、同伴与新梗已经就位。现在，把热爱踢出屏幕。</p></div>
-            <button className="inline-sensor-toggle" onClick={() => setSensorPanel((value) => !value)} aria-expanded={sensorPanel}><PixelIcon src="/assets/button-icons-v2/sensor.png" alt="" className="button-icon" />手机感应</button>
+            <button className="inline-sensor-toggle" onClick={() => setSensorPanel((value) => !value)} aria-expanded={sensorPanel}><PixelIcon src="/assets/button-icons-v2/sensor.avif" alt="" className="button-icon" />手机感应</button>
             <div className={`goal-stage ${kicking ? `kicking ${kickOutcome}${kickOutcome === "miss" ? ` miss-${kickDirection}` : ""}` : kickOutcome === "miss" ? "missed" : ""}`}>
               <div className="goal-net"><span>声浪出口</span></div>
               <div className="ritual-orbit">
@@ -1136,12 +1324,12 @@ export default function Home() {
                 onClick={triggerGoal}
                 disabled={kicking}
               >
-                <PixelIcon src="/assets/button-icons-v2/swipe-kick.png" alt="足球" className="kick-ball-icon" />
+                <PixelIcon src="/assets/button-icons-v2/swipe-kick.avif" alt="足球" className="kick-ball-icon" />
               </button>
               <div className="kick-trail" />
             </div>
             <div className="kick-instruction">{kickHint}</div>
-            <div className="kick-actions"><PixelButton onClick={triggerGoal} icon="/assets/button-icons-v2/goal-sensor.png" tone="secondary" disabled={kicking} className="kick-trigger">{kicking ? "足球飞行中…" : kickOutcome === "miss" ? "再踢一遍" : "现在踢球"}</PixelButton><PixelButton onClick={() => setStage("result")} icon="/assets/button-icons-v2/assist.png" tone="ghost">无障碍助攻键</PixelButton></div>
+            <div className="kick-actions"><PixelButton onClick={triggerGoal} icon="/assets/button-icons-v2/goal-sensor.avif" tone="secondary" disabled={kicking} className="kick-trigger">{kicking ? "足球飞行中…" : kickOutcome === "miss" ? "再踢一遍" : "现在踢球"}</PixelButton><PixelButton onClick={() => setStage("result")} icon="/assets/button-icons-v2/assist.avif" tone="ghost">无障碍助攻键</PixelButton></div>
           </div>
         )}
 
@@ -1152,7 +1340,7 @@ export default function Home() {
             <h2>闽超破圈，<br /><em>被你继续讲了一次。</em></h2>
             <p>{shareStatus}</p>
             <div className="result-card">{shareCardUrl ? <img src={shareCardUrl} alt="自动生成的闽超像素分享卡" /> : <div className="card-loading">像素卡正在显影…</div>}{qrDataUrl && <div className="share-qr"><img src={qrDataUrl} alt="在手机上继续体验的二维码" /><span>扫码带走声浪</span></div>}</div>
-            <div className="result-actions"><PixelButton onClick={attemptShare} icon="/assets/button-icons-v2/share.png" blocked={!shareCardUrl}><span className="share-button-copy">发布<br />分享给朋友</span></PixelButton>{shareCardUrl && <a className="pixel-button secondary" href={shareCardUrl} download="闽超声浪接力.png"><PixelIcon src="/assets/button-icons-v2/save.png" alt="" className="button-icon" />保存像素卡</a>}<PixelButton onClick={resetGame} icon="/assets/button-icons-v2/pass-next.png" tone="ghost">把球交给下一位</PixelButton></div>
+            <div className="result-actions"><PixelButton onClick={attemptShare} icon="/assets/button-icons-v2/share.avif" blocked={!shareCardUrl}><span className="share-button-copy">发布<br />分享给朋友</span></PixelButton>{shareCardUrl && <a className="pixel-button secondary" href={shareCardUrl} download="闽超声浪接力.png"><PixelIcon src="/assets/button-icons-v2/save.avif" alt="" className="button-icon" />保存像素卡</a>}<PixelButton onClick={resetGame} icon="/assets/button-icons-v2/pass-next.avif" tone="ghost">把球交给下一位</PixelButton></div>
           </div>
         )}
           </div>
@@ -1174,7 +1362,7 @@ export default function Home() {
             <p id="feedback-dialog-copy">{feedbackDialog.copy}</p>
             <PixelButton
               onClick={dismissFeedback}
-              icon="/assets/button-icons-v2/pass-next.png"
+              icon="/assets/button-icons-v2/pass-next.avif"
               testId="feedback-dialog-action"
               autoFocus
             >
@@ -1186,5 +1374,35 @@ export default function Home() {
 
       <footer><span>原创互动原型 · 不使用真实赛事数据</span><span>镜头与麦克风仅在你主动开启时使用</span></footer>
     </main>
+
+    {!experienceStarted && (
+      <div className={`preloader ${preloadReady ? "ready" : ""}`} role="dialog" aria-modal="true" aria-labelledby="preloader-title" aria-busy={!preloadReady}>
+        <div className="preloader-scanlines" aria-hidden="true" />
+        <div className="preloader-content">
+          <span className="preloader-kicker">PRE-MATCH · 声浪集结</span>
+          <PixelIcon src="/assets/button-icons-v2/ritual-ball.avif" alt="" className="preloader-icon" />
+          <h1 id="preloader-title">{preloadReady ? "声浪集结完毕" : preloadFailures > 0 ? "有资源掉队了" : "正在集结闽超声浪"}</h1>
+          <p>{preloadReady ? "画面已经就位，准备开球。" : preloadFailures > 0 ? `还有 ${preloadFailures} 项资源未能加载，请重新集结。` : "画面与音效准备中"}</p>
+          <div className="preloader-meter" role="progressbar" aria-label="资源加载进度" aria-valuemin={0} aria-valuemax={100} aria-valuenow={preloadProgress}>
+            <i style={{ width: `${preloadProgress}%` }} />
+          </div>
+          <strong className="preloader-percent">{preloadProgress}%</strong>
+          {preloadFailures > 0 ? (
+            <button className="preloader-enter" onClick={() => setPreloadAttempt((value) => value + 1)}>
+              <PixelIcon src="/assets/button-icons-v2/undo.avif" alt="" className="button-icon" />
+              重新加载
+            </button>
+          ) : preloadReady ? (
+            <button className="preloader-enter" onClick={() => void enterExperience()} autoFocus>
+              <PixelIcon src="/assets/button-icons-v2/start-pass.avif" alt="" className="button-icon" />
+              进入全屏演示
+            </button>
+          ) : (
+            <span className="preloader-wait" aria-live="polite">LOADING</span>
+          )}
+        </div>
+      </div>
+    )}
+    </>
   );
 }

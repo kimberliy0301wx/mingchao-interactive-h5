@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "一脚踢出圈｜闽超声浪接力",
     description: "听故事、选符号、找同伴、做二创，再把闽超一脚踢出屏幕。",
-    images: [{ url: "/og.png", width: 1774, height: 887, alt: "一脚踢出圈，闽超声浪接力" }],
+    images: [{ url: "/og.jpg", width: 1774, height: 887, alt: "一脚踢出圈，闽超声浪接力" }],
     locale: "zh_CN",
     type: "website",
   },
@@ -16,17 +16,19 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "一脚踢出圈｜闽超声浪接力",
     description: "把一场比赛变成愿意被继续讲述的城市记忆。",
-    images: ["/og.png"],
+    images: ["/og.jpg"],
   },
   icons: {
-    icon: "/assets/guide.png",
-    shortcut: "/assets/guide.png",
+    icon: "/assets/guide-icon.png",
+    shortcut: "/assets/guide-icon.png",
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: "cover",
   themeColor: "#0a4a32",
 };

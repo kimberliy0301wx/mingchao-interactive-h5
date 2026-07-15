@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 const pagesBase = "/mingchao-interactive-h5";
 
 export default defineConfig({
-  root: "pages",
+  root: "github-pages",
   publicDir: "../public",
   base: `${pagesBase}/`,
   plugins: [
