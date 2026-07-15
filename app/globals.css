@@ -22,6 +22,7 @@
   --pixel-shadow-lg: 8px 8px 0 var(--black-line);
   --font-pixel: "DotGothic16", "Microsoft YaHei", "PingFang SC", monospace;
   --font-hud: "Press Start 2P", "DotGothic16", monospace;
+  --app-height: 100dvh;
 }
 
 * { box-sizing: border-box; }
@@ -2424,8 +2425,9 @@ footer {
   }
 
   .game-shell {
-    height: 100dvh;
-    min-height: 100svh;
+    height: var(--app-height, 100dvh);
+    min-height: 0;
+    max-height: var(--app-height, 100dvh);
     grid-template-rows: 40px 34px minmax(0, 1fr);
     gap: 4px;
     padding:
@@ -2532,7 +2534,9 @@ footer {
 
   .stage-fit {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
     transform-origin: top center;
   }
 
@@ -2540,7 +2544,8 @@ footer {
   .act-layout,
   .result-layout {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    min-height: 0;
   }
 
   /* Intro: clear hierarchy, character retains the visual focus. */
